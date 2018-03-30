@@ -7,8 +7,8 @@ public class informationProcessing {
     public static void main(String[] args) {
         try {
 Class.forName("org.mariadb.jdbc.Driver");
-    String user = "avarote";
-    String passwd = "200203589";
+    String user = "";
+    String passwd = "";
 
             Connection conn = null;
             Statement stmt = null;
