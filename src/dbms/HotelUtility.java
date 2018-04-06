@@ -44,28 +44,28 @@ public class HotelUtility {
 
         try
         {
-            ResultSet result = statement.executeQuery("(SELECT \"Room Stay\" AS Item, (CEIL(TIMESTAMPDIFF("+ 
-            "SECOND,CI.startTime,CI.endTime)/86400))*R.rate  as Amount FROM CheckInInfo CI, Room R WHERE R.roomNo=CI.roomNo AND "+
-            "R.hotelID=CI.hotelID AND CI.bID="+bID+")"+ 
+            ResultSet result = statement.executeQuery("(SELECT \"Room Stay\" AS Item, (CEIL(TIMESTAMPDIFF("+
+            "SECOND,BI.startTime,BI.endTime)/86400))*R.rate  as Amount FROM BillingInfo BI, Room R WHERE R.roomNo=BI.roomNo AND "+
+            "R.hotelID=BI.hotelID AND BI.bID="+bID+") "+
             "UNION "+
-            "(SELECT S.name AS Item, SUM(O.price*P.qty) AS Amount from Provides P, Services S, Offers O, CheckInInfo C WHERE "+
-            "P.serviceID=S.serviceID AND C.bID=P.bID AND C.hotelID=O.hotelID AND C.roomNo=O.roomNo AND P.serviceID=O.serviceID AND P.bID="+bID+
-            " GROUP by P.serviceID)"+
+            "(SELECT S.name AS Item, SUM(O.price*P.qty) AS Amount from Provides P, Services S, Offers O, BillingInfo BI2 WHERE "+
+            "P.bID="+bID+" AND P.serviceID=S.serviceID AND BI2.bID=P.bID AND BI2.hotelID=O.hotelID AND BI2.roomNo=O.roomNo AND "+
+            "P.serviceID=O.serviceID GROUP by P.serviceID) "+
             "UNION"+
             "(SELECT \"Total\", (CASE WHEN (SELECT COUNT(*) FROM BillingInfo, Card_payment WHERE BillingInfo.bID="+bID+" AND "+
             "BillingInfo.paymentID=Card_payment.paymentID AND Card_payment.type='hotel card')=0 THEN SUM(C.Amount) ELSE SUM(C.Amount)*0.95 END) "+
             "FROM "+
-            "((SELECT \"Room Stay\" AS Item, (CEIL(TIMESTAMPDIFF(SECOND,CI.startTime,CI.endTime)/86400))*R.rate  as Amount FROM CheckInInfo CI, "+
-            "Room R WHERE R.roomNo=CI.roomNo AND R.hotelID=CI.hotelID AND CI.bID="+bID+") "+
+            "((SELECT \"Room Stay\" AS Item, (CEIL(TIMESTAMPDIFF(SECOND,BI3.startTime,BI3.endTime)/86400))*R.rate  as Amount "+
+            "FROM BillingInfo BI3, Room R WHERE R.roomNo=BI3.roomNo AND R.hotelID=BI3.hotelID AND BI3.bID="+bID+") "+
             "UNION "+
-            "(SELECT S.name AS Item, SUM(O.price*P.qty) AS Amount from Provides P, Services S, Offers O, CheckInInfo C WHERE "+
-            "P.serviceID=S.serviceID AND C.bID=P.bID AND C.hotelID=O.hotelID AND C.roomNo=O.roomNo AND P.serviceID=O.serviceID AND P.bID="+bID+
-            " GROUP by P.serviceID))AS C)");
+            "(SELECT S.name AS Item, SUM(O.price*P.qty) AS Amount from Provides P, Services S, Offers O, BillingInfo BI4 "+
+            "WHERE P.bID="+bID+" AND P.serviceID=S.serviceID AND BI4.bID=P.bID AND BI4.hotelID=O.hotelID AND BI4.roomNo=O.roomNo "+
+            "AND P.serviceID=O.serviceID GROUP by P.serviceID))AS C)");
 
-	    ResultSetMetaData rsMetaData = result.getMetaData();
+    	    ResultSetMetaData rsMetaData = result.getMetaData();
             System.out.format("%n%-25s%16s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2));
-	    while (result.next()) {
-	        System.out.format("%-25s%16s%n",result.getString(1), result.getString(2));
+            while (result.next()) {
+	           System.out.format("%-25s%16s%n",result.getString(1), result.getString(2));
             }
 
         }
