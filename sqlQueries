@@ -1,0 +1,180 @@
+DROP TABLE if exists Manager;
+DROP TABLE if exists Offers;
+DROP TABLE if exists CheckInInfo;
+DROP TABLE if exists Provides;
+DROP TABLE if exists PresidentialSuite;
+DROP TABLE if exists RoomServiceStaff;
+DROP TABLE if exists CateringServiceStaff;
+DROP TABLE if exists FrontDeskStaff;
+DROP TABLE if exists Staff;
+DROP TABLE if exists Room;
+DROP TABLE if exists Hotel;
+DROP TABLE if exists Customer;
+DROP TABLE if exists BillingInfo;
+DROP TABLE if exists PaymentInfo_payment;
+DROP TABLE if exists PaymentInfo_payer;
+DROP TABLE if exists Card_payment;
+DROP TABLE if exists Card_details;
+DROP TABLE if exists Services;
+/*DROP TABLE if exists Staff;
+DROP TABLE if exists Room;
+DROP TABLE if exists Hotel;*/
+
+CREATE TABLE Hotel (
+hotelID INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(50) NOT NULL,
+address VARCHAR(150) NOT NULL,
+phoneNumber BIGINT NOT NULL
+);
+
+CREATE TABLE Room (
+availability BOOLEAN NOT NULL DEFAULT 1,
+category VARCHAR(50) NOT NULL,
+occupancy INT NOT NULL,
+rate DECIMAL NOT NULL,
+hotelID INT NOT NULL,
+roomNo INT NOT NULL,
+CONSTRAINT room_pk PRIMARY KEY(roomNo, hotelID),
+CONSTRAINT room_hotel_fk FOREIGN KEY(hotelID) REFERENCES Hotel(hotelID) ON DELETE CASCADE
+);
+
+CREATE TABLE Staff (
+staffID INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(30) NOT NULL,
+age INT NOT NULL,
+jobTitle VARCHAR(30) NOT NULL,
+dept VARCHAR(30) NOT NULL,
+ph BIGINT NOT NULL,
+hotelID INT NOT NULL,
+CONSTRAINT staff_hotel_fk FOREIGN KEY(hotelID) REFERENCES Hotel(hotelID) ON DELETE CASCADE
+);
+
+CREATE TABLE Manager(
+staffID INT NOT NULL PRIMARY KEY,
+hotelID INT NOT NULL,
+CONSTRAINT manager_hotel_fk FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELETE CASCADE,
+CONSTRAINT man_hotel_fk FOREIGN KEY(hotelID) REFERENCES Hotel(hotelID) ON DELETE CASCADE
+);
+
+CREATE TABLE RoomServiceStaff (
+staffID INT PRIMARY KEY,
+availability BOOLEAN NOT NULL DEFAULT 1,
+CONSTRAINT room_staff_fk FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELETE CASCADE
+);
+
+
+CREATE TABLE CateringServiceStaff (
+staffID INT PRIMARY KEY,
+availability BOOLEAN NOT NULL,
+CONSTRAINT catering_staff_fk FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELETE CASCADE
+
+);
+
+
+CREATE TABLE FrontDeskStaff (
+staffID INT PRIMARY KEY,
+CONSTRAINT staff_fk FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELETE CASCADE
+);
+
+
+CREATE TABLE PresidentialSuite (
+RoomServiceStaffID INT,
+CateringServiceStaffID INT,
+roomNo INT NOT NULL,
+hotelID INT NOT NULL,
+CONSTRAINT suite_pk PRIMARY KEY(roomNo, hotelID),
+CONSTRAINT psuite_service_staff_fk FOREIGN KEY(CateringServiceStaffID) REFERENCES CateringServiceStaff(staffID) ON DELETE CASCADE,
+CONSTRAINT psuite_catering_staff_fk FOREIGN KEY(RoomServiceStaffID) REFERENCES RoomServiceStaff(staffID) ON DELETE CASCADE
+);
+
+CREATE TABLE Customer(
+customerID INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(30) NOT NULL,
+dob DATE NOT NULL,
+phone BIGINT NOT NULL,
+email VARCHAR(30) NOT NULL
+);
+
+
+
+CREATE TABLE PaymentInfo_payer (
+ssn INT PRIMARY KEY,
+address VARCHAR(150) NOT NULL
+);
+
+CREATE TABLE PaymentInfo_payment (
+paymentID INT PRIMARY KEY AUTO_INCREMENT,
+ssn INT NOT NULL,
+paymentType VARCHAR(150) NOT NULL,
+CONSTRAINT PaymentInfo_payment_fk FOREIGN KEY(ssn) REFERENCES PaymentInfo_payer(ssn) ON DELETE CASCADE
+);
+
+CREATE TABLE BillingInfo (
+bID INT PRIMARY KEY AUTO_INCREMENT,
+amount DECIMAL NOT NULL,
+paymentID INT NOT NULL,
+CONSTRAINT BillingInfo_fk FOREIGN KEY(paymentID) REFERENCES PaymentInfo_payment(paymentID) ON DELETE CASCADE
+);
+
+CREATE TABLE Card_details (
+cardNo VARCHAR(20),
+name VARCHAR(150) NOT NULL,
+type VARCHAR(50) NOT NULL,
+expiryDate DATE NOT NULL,
+cvv INT,
+CONSTRAINT Card_details_pk PRIMARY KEY(cardNo)
+);
+
+CREATE TABLE Card_payment (
+paymentID INT PRIMARY KEY,
+type VARCHAR(50) NOT NULL,
+cardNo VARCHAR(20) NOT NULL,
+CONSTRAINT Card_details_fk FOREIGN KEY(CardNo) REFERENCES Card_details(cardNo) ON DELETE CASCADE
+);
+
+CREATE TABLE Services(
+serviceID INT PRIMARY KEY,
+name VARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE Offers(
+serviceID INT NOT NULL,
+price INT NOT NULL,
+hotelID INT NOT NULL,
+roomNo INT NOT NULL,
+CONSTRAINT offers_pk PRIMARY KEY(hotelID,roomNo,serviceID),
+CONSTRAINT offers_fk1 FOREIGN KEY(hotelID,roomNo) REFERENCES Room(hotelID, roomNo) ON DELETE CASCADE,
+CONSTRAINT offers_fk2 FOREIGN KEY(serviceID) REFERENCES Services(serviceID) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Provides(
+qty INT NOT NULL,
+staffID INT NOT NULL,
+serviceID INT NOT NULL,
+bID INT NOT NULL,
+CONSTRAINT provides_pk PRIMARY KEY(staffID, serviceID, bID),
+CONSTRAINT provides_fk1 FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELETE CASCADE,
+CONSTRAINT provides_fk2 FOREIGN KEY(serviceID) REFERENCES Services(serviceID) ON DELETE CASCADE,
+CONSTRAINT provides_fk3 FOREIGN KEY(bID) REFERENCES BillingInfo(bID) ON DELETE CASCADE
+);
+
+CREATE TABLE CheckInInfo(
+/*startDate DATE NOT NULL,
+endDate DATE NOT NULL,*/
+startTime TIMESTAMP NOT NULL,
+endTime TIMESTAMP NOT NULL,
+guestCount INT NOT NULL,
+bID INT PRIMARY KEY,
+customerID INT NOT NULL,
+hotelID INT NOT NULL,
+staffID INT NOT NULL,
+roomNo INT NOT NULL,
+CONSTRAINT checkin_fk1 FOREIGN KEY(bID) REFERENCES BillingInfo(bID) ON DELETE CASCADE,
+CONSTRAINT checkin_fk2 FOREIGN KEY(customerID) REFERENCES Customer(customerID) ON DELETE CASCADE,
+CONSTRAINT checkin_fk3 FOREIGN KEY(hotelID, roomNo) REFERENCES Room(hotelID, roomNo) ON DELETE CASCADE,
+CONSTRAINT checkin_fk4 FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELETE CASCADE
+);
+
+
