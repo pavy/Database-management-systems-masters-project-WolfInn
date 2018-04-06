@@ -4,20 +4,59 @@ import java.util.Scanner;
 
 public class HotelUtility {
     private static final String NULL = null;
+    public int getBillingID(Statement statement,String hotelID,String roomNo){
+        Scanner scan = new Scanner(System.in);
+        try{
+            ResultSet result = statement.executeQuery("select bID from BillingInfo WHERE hotelID="+hotelID+" AND roomNo="+roomNo+" AND endTime IS NULL");
+            if(result.next())
+                return result.getInt("bID");
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 	public void maintainServiceRecord(Statement statement)
     {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter your ID(Staff ID): ");
+        System.out.print("Enter your ID(Staff ID): ");
         String staffID = scan.nextLine();
-        System.out.println("Enter Service ID: ");
+        
+        System.out.print("Enter Hotel ID: ");
+        String hotelID = scan.nextLine();
+        System.out.print("Enter Room number: ");
+        String roomNo = scan.nextLine();
+        String bID = Integer.toString(getBillingID(statement,hotelID,roomNo));
+        if(bID=="-1")
+        {
+            System.out.println("Room is unoccupied!!");
+            return;
+        }
+
+        System.out.println("************SERVICES OFFERED*************");
+        ResultSet result;
+        try{
+            result = statement.executeQuery("select * from Services, Offers WHERE Offers.hotelID="+hotelID+" AND Offers.roomNo="+roomNo+" AND Offers.serviceID=Services.serviceID");
+            ResultSetMetaData rsMetaData = result.getMetaData();
+            System.out.format("%n%9s   %-25s",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2));
+            while (result.next()) {
+                System.out.format("%n%9s   %-25s",result.getString(1), result.getString(2));
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        System.out.println("");
+        System.out.print("Enter Service ID: ");
         String serviceID = scan.nextLine();
-        System.out.println("Enter Billing ID: ");
-        String bID = scan.nextLine();
-        System.out.println("Enter Quantity: ");
+        System.out.print("Enter Quantity: ");
         String qty = scan.nextLine();
         try
         {
-            ResultSet result = statement.executeQuery("select qty from Provides where staffID=" + staffID + " AND serviceID=" + serviceID + " AND bID=" + bID);
+            result = statement.executeQuery("select qty from Provides where staffID=" + staffID + " AND serviceID=" + serviceID + " AND bID=" + bID);
             if(result.next())
             {
                 int newqty=result.getInt("qty")+Integer.parseInt(qty);
@@ -39,8 +78,16 @@ public class HotelUtility {
     public void maintainBillingAccount(Statement statement)
     {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter billing ID: ");
-        String bID = scan.nextLine();
+        System.out.print("Enter Hotel ID: ");
+        String hotelID = scan.nextLine();
+        System.out.print("Enter Room number: ");
+        String roomNo = scan.nextLine();
+        String bID = Integer.toString(getBillingID(statement,hotelID,roomNo));
+        if(bID=="-1")
+        {
+            System.out.println("Room is unoccupied!!");
+            return;
+        }
 
         try
         {
@@ -67,7 +114,8 @@ public class HotelUtility {
             while (result.next()) {
 	           System.out.format("%-25s%16s%n",result.getString(1), result.getString(2));
             }
-
+            result.previous();
+            result = statement.executeQuery("UPDATE BillingInfo SET amount="+result.getString(2)+" WHERE bID="+bID);
         }
         catch(SQLException e)
         {
