@@ -46,7 +46,7 @@ public class WolfInn {
             int choice = scan.nextInt();
             HotelUtility obj = new HotelUtility();
             switch(choice) {
-            		case 1 :	infoProcessing();
+            		case 1 :	infoProcessing(obj, statement);
             					break;
             		case 2 : obj.maintainServiceRecord(statement);
             					break;
@@ -74,8 +74,9 @@ public class WolfInn {
 		
 	}
 
-	private static void infoProcessing() {
+	private static void infoProcessing(HotelUtility obj, Statement statement) throws SQLException {
 		// handle 15 cases
+		
 		Scanner scan = new Scanner(System.in);
 
         System.out.println("1 - Enter information about Hotel");
@@ -90,15 +91,46 @@ public class WolfInn {
         System.out.println("10 - Enter information about Customer");
         System.out.println("11 - Update Customer information");
         System.out.println("12 - Delete Customer");
-        System.out.println("13 - Check Availability of room");
-        System.out.println("14 - Assign room to customer");
-        System.out.println("15 - Release room");
+        System.out.println("13 - Check Availability of room by Hotel and Room Type");
+        System.out.println("14 - Check Availability of room by Hotel and Room Number");
+        System.out.println("15 - Assign room to customer");
+        System.out.println("16 - Release room");
         
         int choice = scan.nextInt();
         
         switch(choice) {
-        		case 1 :	// add respective function calls
+        		case 1 :	obj.enterHotelInfo(statement);
         					break;
+        		case 2 :obj.updateHotelInfo(statement);
+        		            break;
+        		case 3 :obj.deleteHotel(statement);
+        		            break;
+        		case 4 :obj.enterRoomInfo(statement);
+        		            break;
+        		case 5 :obj.updatedRoomInfo(statement);
+        		            break;
+        		case 6 :obj.deleteRoom(statement);
+        		            break;
+        		case 7 :obj.enterStaffInfo(statement);
+        		            break;
+        		case 8 :obj.updateStaffInfo(statement);
+        		            break;
+        		case 9 :obj.deleteStaff(statement);
+        		            break;
+        		case 10:obj.enterCustomerInfo(statement);
+        		            break;
+        		case 11:obj.updateCustomerInfo(statement);
+        		            break;
+        		case 12:obj.deleteCustomer(statement);
+        		            break;
+        		case 13:obj.roomAvailabilityByHotelAndRoomtype(statement);
+        		            break;
+        		case 14:obj.roomAvailabilityByHotelAndRoomno(statement);
+	            			break;            
+        		case 15:obj.assignRoom(statement);
+        		            break;
+        		case 16:obj.releaseRoom(statement);
+        		            break;			
         		default : System.out.println("Please select a valid task");
         					break;
         }
