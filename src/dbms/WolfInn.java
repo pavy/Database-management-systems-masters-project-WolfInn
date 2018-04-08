@@ -5,12 +5,12 @@ import java.util.Scanner;
 public class WolfInn {
 	
 	// Update user info 
-	private static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/$USER$"; // Using SERVICE_NAME
+	private static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/avarote"; // Using SERVICE_NAME
 
 	// Update your user and password info here!
 
-	private static final String user = "$USER$";
-	private static final String password = "$PASSWORD$";
+	private static final String user = "avarote";
+	private static final String password = "200203589";
 
 	public static void main(String[] args) {
 		try {
