@@ -666,10 +666,10 @@ public class HotelUtility {
         System.out.println("Enter the staff id");
         int sid = scan.nextInt();
         scan.nextLine();
-        System.out.println("Enter the start time in the format ");
+        System.out.println("Enter the start time in the format YYYY-MM-DD HH:MM:SS");
         String sTime = scan.nextLine();
         scan.nextLine();
-        System.out.println("Enter the end time");
+        System.out.println("Enter the end time in the format YYYY-MM-DD HH:MM:SS");
         String eTime = scan.nextLine();
         scan.nextLine();
         System.out.println("Enter the amount");
