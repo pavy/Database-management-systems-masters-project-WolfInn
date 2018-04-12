@@ -598,18 +598,6 @@ public class HotelUtility {
     //Correct last two functionalities
     public void assignRoom(Statement statement) throws SQLException {
       	Scanner scan = new Scanner(System.in);
-	System.out.println("The billing information");
-            try {
-            ResultSet resultBilling = statement.executeQuery("SELECT * FROM BillingInfo");
-            ResultSetMetaData rsMetaData = resultBilling.getMetaData();
-            System.out.format("%n%-25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3));
-            while (resultBilling.next()) {
-                System.out.format("%-25s%25s%25s%n",resultBilling.getString(1), resultBilling.getString(2), resultBilling.getString(3));
-            }
-            }catch(SQLException e)
-            {
-            e.printStackTrace();
-            }
   	    System.out.println("The Customer information");
 	    try {
             ResultSet resultCust = statement.executeQuery("SELECT * FROM Customer");
@@ -646,31 +634,69 @@ public class HotelUtility {
             {
               e.printStackTrace();
             }
-    	    System.out.println("Enter the guest count");
+
+            System.out.println("The Room information");
+            try {
+            ResultSet resultRoom = statement.executeQuery("SELECT * FROM Room");
+            ResultSetMetaData rsMetaData = resultRoom.getMetaData();
+            System.out.format("%n%-25s%25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6));
+            while (resultRoom.next()) {
+                System.out.format("%-25s%25s%25s%25s%25s%25s%n",resultRoom.getString(1), resultRoom.getString(2), resultRoom.getString(3), resultRoom.getString(4), resultRoom.getString(5),resultRoom.getString(6));
+            }
+            }catch(SQLException e)
+            {
+            e.printStackTrace();
+            }
+	    int rsid=0,csid=0;
+    	System.out.println("Enter the hotel id");
+        int hid = scan.nextInt();
+        scan.nextLine();
+        System.out.println("Enter the guest count");
         int gcount = scan.nextInt();
-        System.out.println("Enter the billing id");
-        int bid = scan.nextInt();
+        scan.nextLine();
         System.out.println("Enter the customer id");
         int cid = scan.nextInt();
-        System.out.println("Enter the hotel id");
-        int hid = scan.nextInt();
-        System.out.println("Enter the staff id");
-        int sid = scan.nextInt();
-        System.out.println("Enter the room service staff id");
-        int rsid = scan.nextInt();
-        System.out.println("Enter the catering service staff id");
-        int csid = scan.nextInt();
+        scan.nextLine();
+        System.out.println("Enter the payment id");
+        int pid = scan.nextInt();
+        scan.nextLine();
         System.out.println("Enter the room number");
         int rno = scan.nextInt();
+        scan.nextLine();
+        System.out.println("Enter the staff id");
+        int sid = scan.nextInt();
+        scan.nextLine();
+        System.out.println("Enter the start time in the format ");
+        String sTime = scan.nextLine();
+        scan.nextLine();
+        System.out.println("Enter the end time");
+        String eTime = scan.nextLine();
+        scan.nextLine();
+        System.out.println("Enter the amount");
+        int amount = scan.nextInt();
+        scan.nextLine();
         int notAvailable = 0;
         ResultSet result; 
         try
         {
-            result = statement.executeQuery("INSERT INTO CheckInInfo(startTime,guestCount,bID,customerID,hotelID,staffID,roomNo)" +  "VALUES ('NOW()','"+gcount+"', '"+bid+"','"+cid+"','"+hid+"','"+sid+"','"+rno+"')");
+            ResultSet roomCategory = statement.executeQuery("SELECT category FROM Room where roomNo = '"+rno+"'");
+            String category = null;
+            if (roomCategory.next()) {
+            category = roomCategory.getString(1);
+            }
+            if(category.equals("Presidential Suite")){
+               System.out.println("Enter the room service staff id");
+               rsid = scan.nextInt();
+               System.out.println("Enter the catering service staff id");
+               csid = scan.nextInt();
+             }
+            result = statement.executeQuery("INSERT INTO BillingInfo(amount,paymentID,startTime,endTime,guestCount,customerID,hotelID,staffID,roomNo)" +  "VALUES ('"+amount+"', '"+pid+"','"+sTime+"','"+eTime+"','"+gcount+"','"+cid+"','"+hid+"','"+sid+"','"+rno+"')");
             result = statement.executeQuery("UPDATE Room SET availability = "+notAvailable+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
+            if(category.equals("Presidential Suite")){
             result = statement.executeQuery("UPDATE PresidentialSuite SET RoomServiceStaffID = "+rsid+",CateringServiceStaffID = "+csid+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
             result = statement.executeQuery("UPDATE RoomServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+rsid+"");
             result = statement.executeQuery("UPDATE CateringServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+csid+"");
+            }
             System.out.println("Customer has been checked in");
         }catch(SQLException e)
         {
@@ -712,10 +738,17 @@ public class HotelUtility {
         ResultSet result;
         try
         {
+            ResultSet roomCategory = statement.executeQuery("SELECT category FROM Room where roomNo = '"+rno+"'");
+            String category = null;
+            if (roomCategory.next()) {
+            category = roomCategory.getString(1);
+            }
             result = statement.executeQuery("UPDATE Room SET availability = "+available+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
+            if(category.equals("Presidential Suite")){
             result = statement.executeQuery("UPDATE PresidentialSuite SET RoomServiceStaffID = "+nullValue+" AND CateringServiceStaffID = "+nullValue+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
             result = statement.executeQuery("UPDATE RoomServiceStaff SET availability = "+available+" WHERE staffID = "+rsid+"");
             result = statement.executeQuery("UPDATE CateringServiceStaff SET availability = "+available+" WHERE staffID = "+csid+"");
+            }
             System.out.println("Room has been released");
         }catch(SQLException e)
         {
