@@ -250,12 +250,39 @@ INSERT INTO Card_payment(paymentID, type, cardNo) VALUES (3, 'VISA', '2497');
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (4409328, '24 BST Dr , Dallas TX 14');
 INSERT INTO PaymentInfo_payment(paymentID, ssn, paymentType) VALUES (4, 4409328, 'cash');
 
-INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 0003, 02);
-INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 0001, 01);
-INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 0001, 01);
-INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 0001, 02);
-INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 10, 0002, 03);
-INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 0003, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 1, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 1, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 1, 05);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 1, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 1, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 1, 05);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 1, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 1, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 1, 05);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 1, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 1, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 1, 05);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 05);
+
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 2, 03);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 2, 03);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 2, 03);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 2, 03);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 2, 03);
+
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 3, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 3, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 3, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 3, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 3, 02);
+
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 4, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 4, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 4, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 4, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 4, 01);
 
 
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
