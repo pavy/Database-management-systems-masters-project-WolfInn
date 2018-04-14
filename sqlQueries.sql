@@ -54,6 +54,8 @@ address VARCHAR(150) NOT NULL,
 CONSTRAINT staff_hotel_fk FOREIGN KEY(hotelID) REFERENCES Hotel(hotelID) ON DELETE CASCADE
 );
 
+Alter Table Staff Auto_Increment=100;
+
 CREATE TABLE Manager(
 staffID INT NOT NULL PRIMARY KEY,
 hotelID INT NOT NULL,
@@ -100,7 +102,7 @@ phone BIGINT NOT NULL,
 email VARCHAR(30) NOT NULL
 );
 
-
+Alter Table Customer Auto_Increment=1001;
 
 CREATE TABLE PaymentInfo_payer (
 ssn INT PRIMARY KEY,
