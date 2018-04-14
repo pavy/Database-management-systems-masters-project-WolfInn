@@ -1,6 +1,5 @@
 DROP TABLE if exists Manager;
 DROP TABLE if exists Offers;
-DROP TABLE if exists CheckInInfo;
 DROP TABLE if exists Provides;
 DROP TABLE if exists PresidentialSuite;
 DROP TABLE if exists RoomServiceStaff;
