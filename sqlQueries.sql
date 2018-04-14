@@ -196,7 +196,8 @@ INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Emma
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Ava', 55, 'Catering Staff', 'Catering', 777, 0001, '4425 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Peter', 52, 'Manager', 'Management', 724, 0004, '475 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Olivia', 27, 'Front Desk Staff', 'Management', 799, 0004, '325 PD St , Raleigh NC 27');
-
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Jane', 27, 'Front Desk Staff', 'Management', 798, 0002, '329 PD St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Raj', 27, 'Front Desk Staff', 'Management', 711, 0003, '125 PD St , Raleigh NC 27');
 // Services offered to be included in other table - clarify front desk staff not available for checkin in Hotel 0002 and 0003
 
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
@@ -204,9 +205,9 @@ INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endT
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
 (1002, 0001, 02, 2, 2017-05-10 16:11:00, 2017-05-13 09:27:00, 0, 2, 103);
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
-(1003, 0002, 03, 1, 2016-05-10 15:45:00, 2016-05-14 11:10:00, 0, 3, ...);
+(1003, 0002, 03, 1, 2016-05-10 15:45:00, 2016-05-14 11:10:00, 0, 3, 107);
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
-(1004, 0003, 02, 2, 2018-05-10 14:30:00, 2018-05-12 10:00:00, 0, 4, ...);
+(1004, 0003, 02, 2, 2018-05-10 14:30:00, 2018-05-12 10:00:00, 0, 4, 108);
 
 
 // Billing info - custID, ssn, billadd, paymentmethod, cardno
@@ -231,7 +232,8 @@ INSERT INTO CateringServiceStaff(staffID) VALUES (104);
 
 INSERT INTO FrontDeskStaff(staffID) VALUES (106);
 INSERT INTO FrontDeskStaff(staffID) VALUES (103);
-
+INSERT INTO FrontDeskStaff(staffID) VALUES (107);
+INSERT INTO FrontDeskStaff(staffID) VALUES (108);
 // No customer for Presidential Suite 			INSERT INTO PresidentialSuite(RoomServiceStaffID,CateringServiceStaffID,roomNo,hotelID) VALUES(7,10,401,1);
 
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (5939846, '980 TRT St , Raleigh NC');
