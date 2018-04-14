@@ -21,7 +21,7 @@ DROP TABLE if exists Room;
 DROP TABLE if exists Hotel;*/
 
 CREATE TABLE Hotel (
-hotelID INT(4) ZEROFILL PRIMARY KEY AUTO_INCREMENT,
+hotelID INT ZEROFILL PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(50) NOT NULL,
 address VARCHAR(150) NOT NULL,
 phoneNumber BIGINT NOT NULL,
@@ -33,7 +33,7 @@ availability BOOLEAN NOT NULL DEFAULT 1,
 category VARCHAR(50) NOT NULL,
 occupancy INT NOT NULL,
 rate DECIMAL NOT NULL,
-hotelID INT(4) NOT NULL,
+hotelID INT NOT NULL,
 roomNo INT NOT NULL,
 CONSTRAINT room_pk PRIMARY KEY(roomNo, hotelID),
 CONSTRAINT room_hotel_fk FOREIGN KEY(hotelID) REFERENCES Hotel(hotelID) ON DELETE CASCADE
@@ -46,14 +46,14 @@ age INT NOT NULL,
 jobTitle VARCHAR(30) NOT NULL,
 dept VARCHAR(30) NOT NULL,
 ph BIGINT NOT NULL,
-hotelID INT(4) NOT NULL,	
+hotelID INT NOT NULL,	
 address VARCHAR(150) NOT NULL,
 CONSTRAINT staff_hotel_fk FOREIGN KEY(hotelID) REFERENCES Hotel(hotelID) ON DELETE CASCADE
 );
 
 CREATE TABLE Manager(
 staffID INT NOT NULL PRIMARY KEY,
-hotelID INT(4) NOT NULL,
+hotelID INT NOT NULL,
 CONSTRAINT manager_hotel_fk FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELETE CASCADE,
 CONSTRAINT man_hotel_fk FOREIGN KEY(hotelID) REFERENCES Hotel(hotelID) ON DELETE CASCADE
 );
@@ -83,7 +83,7 @@ CREATE TABLE PresidentialSuite (
 RoomServiceStaffID INT,
 CateringServiceStaffID INT,
 roomNo INT NOT NULL,
-hotelID INT(4) NOT NULL,
+hotelID INT NOT NULL,
 CONSTRAINT suite_pk PRIMARY KEY(roomNo, hotelID),
 CONSTRAINT psuite_service_staff_fk FOREIGN KEY(CateringServiceStaffID) REFERENCES CateringServiceStaff(staffID) ON DELETE CASCADE,
 CONSTRAINT psuite_catering_staff_fk FOREIGN KEY(RoomServiceStaffID) REFERENCES RoomServiceStaff(staffID) ON DELETE CASCADE
