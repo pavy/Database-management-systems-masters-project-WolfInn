@@ -173,10 +173,10 @@ CONSTRAINT provides_fk2 FOREIGN KEY(serviceID) REFERENCES Services(serviceID) ON
 CONSTRAINT provides_fk3 FOREIGN KEY(bID) REFERENCES BillingInfo(bID) ON DELETE CASCADE
 );
 
-INSERT INTO Hotel(name, address, phoneNumber, city) VALUES ( 'Hotel A', '21 ABC St , Raleigh NC 27', 919, 'Raleigh');			// Manager 100
-INSERT INTO Hotel(name, address, phoneNumber, city) VALUES ( 'Hotel B', '25 XYZ St , Rochester NY 54', 718, 'Rochester');		// Manager 101
-INSERT INTO Hotel(name, address, phoneNumber, city) VALUES ( 'Hotel C', '29 PQR St , Greensboro NC 27', 984, 'Greensboro');	// Manager 102
-INSERT INTO Hotel(name, address, phoneNumber, city) VALUES ( 'Hotel D', '28 GHW St , Raleigh NC 32', 920, 'Raleigh');			// Manager 105
+INSERT INTO Hotel(name, address, phoneNumber, city) VALUES ( 'Hotel A', '21 ABC St , Raleigh NC 27', 919, 'Raleigh');			/* Manager 100 */
+INSERT INTO Hotel(name, address, phoneNumber, city) VALUES ( 'Hotel B', '25 XYZ St , Rochester NY 54', 718, 'Rochester');		/* Manager 101 */
+INSERT INTO Hotel(name, address, phoneNumber, city) VALUES ( 'Hotel C', '29 PQR St , Greensboro NC 27', 984, 'Greensboro');	/* Manager 102 */
+INSERT INTO Hotel(name, address, phoneNumber, city) VALUES ( 'Hotel D', '28 GHW St , Raleigh NC 32', 920, 'Raleigh');			/* Manager 105 */
 
 INSERT INTO Room(hotelID,roomNo, category, occupancy, rate) VALUES (0001, 01, 'Economy', 1, 100);
 INSERT INTO Room(hotelID,roomNo, category, occupancy, rate) VALUES (0001, 02, 'Deluxe', 2, 200);
