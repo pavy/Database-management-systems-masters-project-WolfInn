@@ -29,6 +29,8 @@ phoneNumber BIGINT NOT NULL,
 city VARCHAR(25) NOT NULL
 );
 
+Alter Table hotel Auto_Increment=0001;
+
 CREATE TABLE Room (
 availability BOOLEAN NOT NULL DEFAULT 1,
 category VARCHAR(50) NOT NULL,
