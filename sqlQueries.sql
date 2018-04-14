@@ -198,7 +198,7 @@ INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Pete
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Olivia', 27, 'Front Desk Staff', 'Management', 799, 0004, '325 PD St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Jane', 27, 'Front Desk Staff', 'Management', 798, 0002, '329 PD St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Raj', 27, 'Front Desk Staff', 'Management', 711, 0003, '125 PD St , Raleigh NC 27');
-// Services offered to be included in other table - clarify front desk staff not available for checkin in Hotel 0002 and 0003
+/* Services offered to be included in other table - clarify front desk staff not available for checkin in Hotel 0002 and 0003*/
 
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
 (1001, 0001, 01, 1, 2017-05-10 15:17:00, 2017-05-13 10:22:00, 0, 1, 103);
@@ -210,7 +210,7 @@ INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endT
 (1004, 0003, 02, 2, 2018-05-10 14:30:00, 2018-05-12 10:00:00, 0, 4, 108);
 
 
-// Billing info - custID, ssn, billadd, paymentmethod, cardno
+/* Billing info - custID, ssn, billadd, paymentmethod, cardno*/
 
 
 INSERT INTO Services(serviceID, name) VALUES (1, 'Phone Bills');
@@ -225,7 +225,7 @@ INSERT INTO Manager(staffID, hotelID) VALUES (101, 0002);
 INSERT INTO Manager(staffID, hotelID) VALUES (102, 0003);
 INSERT INTO Manager(staffID, hotelID) VALUES (105, 0004);
 
-// Room Service Staff does not exist 			INSERT INTO RoomServiceStaff(staffID) VALUES (7);
+/* Room Service Staff does not exist 			INSERT INTO RoomServiceStaff(staffID) VALUES (7); */
 
 
 INSERT INTO CateringServiceStaff(staffID) VALUES (104);
@@ -234,7 +234,7 @@ INSERT INTO FrontDeskStaff(staffID) VALUES (106);
 INSERT INTO FrontDeskStaff(staffID) VALUES (103);
 INSERT INTO FrontDeskStaff(staffID) VALUES (107);
 INSERT INTO FrontDeskStaff(staffID) VALUES (108);
-// No customer for Presidential Suite 			INSERT INTO PresidentialSuite(RoomServiceStaffID,CateringServiceStaffID,roomNo,hotelID) VALUES(7,10,401,1);
+/* No customer for Presidential Suite 			INSERT INTO PresidentialSuite(RoomServiceStaffID,CateringServiceStaffID,roomNo,hotelID) VALUES(7,10,401,1); */
 
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (5939846, '980 TRT St , Raleigh NC');
 INSERT INTO PaymentInfo_payment(paymentID, ssn, paymentType) VALUES (1, 5939846, 'card');
@@ -265,7 +265,7 @@ INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 10, 0002, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 0003, 02);
 
 
-// Add Entries into Provides table - after confirmation
+/* Add Entries into Provides table - after confirmation */
 
 
 
