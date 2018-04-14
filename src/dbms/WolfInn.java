@@ -49,6 +49,7 @@ public class WolfInn {
 
 	private static void generateReport(Statement statement, Connection connection) {
 		// TODO Auto-generated method stub
+
 		String nextChoice;
 		do{
     		System.out.println("1 - Report occupancy by hotel");
@@ -118,7 +119,7 @@ public class WolfInn {
 
 	private static void infoProcessing( Statement statement, Connection connection) throws SQLException {
 		// handle 15 cases
-		HotelUtility obj = new HotelUtility();
+		HotelUtility obj = new HotelUtility(connection);
 		Scanner scan = new Scanner(System.in);
 		String nextChoice;
         do{
