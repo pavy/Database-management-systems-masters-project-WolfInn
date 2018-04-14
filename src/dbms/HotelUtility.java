@@ -823,15 +823,29 @@ public class HotelUtility {
 
 	public void reportOccupancyByRoomType(Statement statement) {
 		try {
+			
+			/*
+			 * SELECT  Total_Rooms.hotelID, Total_Rooms.category AS 'Room Category', Total_Rooms.Rooms as 'Total Rooms', 
+			 * IFNULL (Occupied_Rooms.Occupied,0) AS 'Rooms Occupied', IFNULL (( Occupied_Rooms.Occupied/Total_Rooms.Rooms)*100,0) AS 
+			 * 'Percentage Occupied' FROM (SELECT hotelID, category, COUNT(*) AS 'Rooms' from Room GROUP BY hotelID,category) AS Total_Rooms 
+			 * LEFT OUTER JOIN (Select hotelID, category, COUNT(*) AS 'Occupied' FROM Room WHERE availability=0 GROUP BY hotelID, category)
+			 *  AS Occupied_Rooms ON Total_Rooms.category=Occupied_Rooms.category and Total_Rooms.hotelID=Occupied_Rooms.hotelID;
+			 */
 			int nOccupiedBit = 0;
+			/*ResultSet result = statement
+					.executeQuery("SELECT  Total_Rooms.hotelID, Total_Rooms.category AS 'Room Category', Total_Rooms.Rooms as 'Total Rooms',"
+							+"IFNULL (Occupied_Rooms.Occupied,0) AS 'Rooms Occupied', IFNULL (( Occupied_Rooms.Occupied/Total_Rooms.Rooms)*100,0) AS"
+							+"'Percentage Occupied' FROM (SELECT hotelID, category, COUNT(*) AS 'Rooms' from Room GROUP BY hotelID,category) AS Total_Rooms"
+							+"LEFT OUTER JOIN (Select hotelID, category, COUNT(*) AS 'Occupied' FROM Room WHERE availability="+nOccupiedBit+" GROUP BY hotelID, category)"
+							+"AS Occupied_Rooms ON Total_Rooms.category=Occupied_Rooms.category and Total_Rooms.hotelID=Occupied_Rooms.hotelID");
+			*/
 			ResultSet result = statement
-					.executeQuery("SELECT Total_Rooms.category AS 'Room Category', Total_Rooms.Rooms as 'Total Rooms', IFNULL ("
-							+ "Occupied_Rooms.Occupied,0) AS 'Rooms Occupied', IFNULL (( Occupied_Rooms.Occupied/Total_Rooms.Rooms)*100,0) "
-							+ "AS 'Percentage Occupied' FROM (SELECT category, COUNT(*) AS 'Rooms' from Room GROUP BY category) AS Total_Rooms"
-							+ " LEFT OUTER JOIN (Select category, COUNT(*) AS 'Occupied' FROM Room WHERE availability="
-							+ nOccupiedBit
-							+ " GROUP BY category) AS Occupied_Rooms ON Total_Rooms.category=Occupied_Rooms.category");
-
+                    .executeQuery("SELECT Total_Rooms.category AS 'Room Category', Total_Rooms.Rooms as 'Total Rooms', IFNULL ("
+                                    + "Occupied_Rooms.Occupied,0) AS 'Rooms Occupied', IFNULL (( Occupied_Rooms.Occupied/Total_Rooms.Rooms)*100,0) "
+                                    + "AS 'Percentage Occupied' FROM (SELECT category, COUNT(*) AS 'Rooms' from Room GROUP BY category) AS Total_Rooms"
+                                    + " LEFT OUTER JOIN (Select category, COUNT(*) AS 'Occupied' FROM Room WHERE availability="
+                                    + nOccupiedBit
+                                    + " GROUP BY category) AS Occupied_Rooms ON Total_Rooms.category=Occupied_Rooms.category");
 			ResultSetMetaData rsMetaData = result.getMetaData();
 			System.out.format("%n%-25s%16s%20s%20s%n%n",
 					rsMetaData.getColumnName(1), rsMetaData.getColumnName(2),
@@ -888,17 +902,22 @@ public class HotelUtility {
 
 	public void reportOccupancyByCity(Statement statement) {
 		try {
-			showCityList(statement);
-			Scanner sc = new Scanner(System.in);
-			System.out.println("Enter city");
-			String city = sc.next();
-			ResultSet result = statement
+			/*
+			 * SELECT  city, SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END) AS OCCUPIED,
+IFNULL (SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END)/COUNT(*)*100,0) AS 'Percentage Occupied'
+FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city
+			 */
+			/*ResultSet result = statement
 					.executeQuery("SELECT COUNT(*) AS ROOMS SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END) AS OCCUPIED,"
 							+ "IFNULL (SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END)/COUNT(*)*100,0) AS 'Percentage Occupied' FROM "
 							+ "(SELECT roomNo, availability FROM Room WHERE hotelID IN (SELECT hotelID from Hotel WHERE city='"
-							+ city + "' )) AS T2");
+							+ city + "' )) AS T2");*/
+			ResultSet result = statement
+					.executeQuery("SELECT  city, SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END) AS OCCUPIED,"+
+			"IFNULL (SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END)/COUNT(*)*100,0) AS 'Percentage Occupied'"+
+							"FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city");
 			ResultSetMetaData rsMetaData = result.getMetaData();
-			System.out.format("%n%-25s%16s%n%n", rsMetaData.getColumnName(1),
+			System.out.format("%n%-25s%16s%16s%n%n", rsMetaData.getColumnName(1),
 					rsMetaData.getColumnName(2), rsMetaData.getColumnName(3));
 			while (result.next()) {
 				System.out.format("%-25s%16s%16s%n", result.getString(1),
@@ -930,12 +949,9 @@ public class HotelUtility {
 
 	public void reportStaffInfoGroupedByRole(Statement statement) {
 		try {
-			Scanner sc = new Scanner(System.in);
-			System.out.println("Enter hotelID");//Doubt
-			int hotelID = sc.nextInt();
+			
 			ResultSet result = statement
-					.executeQuery("select * from Staff where hotelID="
-							+ hotelID + " ORDER BY Staff.dept");
+					.executeQuery("select * from Staff  ORDER BY Staff.dept");
 			ResultSetMetaData rsMetaData = result.getMetaData();
 			System.out.format("%n%-25s%16s%16s%16s%16s%16s%n%n", rsMetaData.getColumnName(1),
 					rsMetaData.getColumnName(2), rsMetaData.getColumnName(3),
