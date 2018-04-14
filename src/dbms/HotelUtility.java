@@ -89,10 +89,14 @@ public class HotelUtility {
             System.out.println("Room is unoccupied!!");
             return;
         }
-
+        System.out.println("Billing ID"+bID);
+        System.out.println("Enter the end time in the format YYYY-MM-DD HH:MM:SS");
+        String eTime = scan.nextLine();
+        ResultSet result;
         try
         {
-            ResultSet result = statement.executeQuery("(SELECT \"Room Stay\" AS Item, (CEIL(TIMESTAMPDIFF("+
+	    result = statement.executeQuery("UPDATE BillingInfo SET endTime = '"+eTime+"' WHERE bID = "+bID+"");
+            result = statement.executeQuery("(SELECT \"Room Stay\" AS Item, (CEIL(TIMESTAMPDIFF("+
             "SECOND,BI.startTime,BI.endTime)/86400))*R.rate  as Amount FROM BillingInfo BI, Room R WHERE R.roomNo=BI.roomNo AND "+
             "R.hotelID=BI.hotelID AND BI.bID="+bID+") "+
             "UNION "+
@@ -648,6 +652,7 @@ public class HotelUtility {
             e.printStackTrace();
             }
 	    int rsid=0,csid=0;
+        try{
     	System.out.println("Enter the hotel id");
         int hid = scan.nextInt();
         scan.nextLine();
@@ -657,9 +662,42 @@ public class HotelUtility {
         System.out.println("Enter the customer id");
         int cid = scan.nextInt();
         scan.nextLine();
-        System.out.println("Enter the payment id");
-        int pid = scan.nextInt();
+        System.out.println("Enter the payment type(cash/card)");
+        String ptype = scan.nextLine();
+        ResultSet result;
+        String ctype = "";
+	String cno = "";
+        if(ptype.equals("card")){
+            System.out.println("Enter the card type (hotel_card/VISA/MASTER)");
+            ctype = scan.nextLine();
+            System.out.println("Enter card number");
+            cno = scan.nextLine();
+            System.out.println("Enter the payer name");
+            String pname = scan.nextLine();
+            System.out.println("Enter expiry date of the card");
+            String expiryDate = scan.nextLine();
+            System.out.println("Enter card cvv");
+            int cvv  = scan.nextInt();
+            scan.nextLine();
+            result = statement.executeQuery("INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv)" + "VALUES ('"+cno+"', '"+pname+"', '"+ctype+"', '"+expiryDate+"', '"+cvv+"')");
+        }     
+
+        System.out.println("Enter the payer ssn");
+        int pssn = scan.nextInt();
         scan.nextLine();
+        int pid=0;
+        System.out.println("Enter the billing address");
+        String paddress = scan.nextLine();
+        
+        result = statement.executeQuery("INSERT INTO PaymentInfo_payer(ssn, address)" + "VALUES ('"+pssn+"', '"+paddress+"')");
+        result = statement.executeQuery("INSERT INTO PaymentInfo_payment(ssn, paymentType) VALUES ('"+pssn+"', '"+ptype+"')");
+        result = statement.executeQuery("SELECT paymentID FROM PaymentInfo_payment ORDER BY paymentID DESC LIMIT 1");
+          if (result.next()) {
+          pid = result.getInt(1);
+          }
+        if(ptype.equals("card")){
+          result = statement.executeQuery("INSERT INTO Card_payment(paymentID, type, cardNo)" + "VALUES ('"+pid+"', '"+ctype+"', '"+cno+"')");
+        } 
         System.out.println("Enter the room number");
         int rno = scan.nextInt();
         scan.nextLine();
@@ -669,16 +707,7 @@ public class HotelUtility {
         System.out.println("Enter the start time in the format YYYY-MM-DD HH:MM:SS");
         String sTime = scan.nextLine();
         scan.nextLine();
-        System.out.println("Enter the end time in the format YYYY-MM-DD HH:MM:SS");
-        String eTime = scan.nextLine();
-        scan.nextLine();
-        System.out.println("Enter the amount");
-        int amount = scan.nextInt();
-        scan.nextLine();
         int notAvailable = 0;
-        ResultSet result; 
-        try
-        {
             ResultSet roomCategory = statement.executeQuery("SELECT category FROM Room where roomNo = '"+rno+"'");
             String category = null;
             if (roomCategory.next()) {
@@ -687,10 +716,12 @@ public class HotelUtility {
             if(category.equals("Presidential Suite")){
                System.out.println("Enter the room service staff id");
                rsid = scan.nextInt();
+               scan.nextLine();
                System.out.println("Enter the catering service staff id");
                csid = scan.nextInt();
-             }
-            result = statement.executeQuery("INSERT INTO BillingInfo(amount,paymentID,startTime,endTime,guestCount,customerID,hotelID,staffID,roomNo)" +  "VALUES ('"+amount+"', '"+pid+"','"+sTime+"','"+eTime+"','"+gcount+"','"+cid+"','"+hid+"','"+sid+"','"+rno+"')");
+               scan.nextLine();
+             }            
+            result = statement.executeQuery("INSERT INTO BillingInfo(paymentID,startTime,guestCount,customerID,hotelID,staffID,roomNo)" +  "VALUES ('"+pid+"','"+sTime+"','"+gcount+"','"+cid+"','"+hid+"','"+sid+"','"+rno+"')");
             result = statement.executeQuery("UPDATE Room SET availability = "+notAvailable+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
             if(category.equals("Presidential Suite")){
             result = statement.executeQuery("UPDATE PresidentialSuite SET RoomServiceStaffID = "+rsid+",CateringServiceStaffID = "+csid+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
@@ -724,25 +755,29 @@ public class HotelUtility {
         System.out.println("Enter the staff id");
         int sid = scan.nextInt();
         scan.nextLine();
-        System.out.println("Enter the room service staff id");
-        int rsid = scan.nextInt();
-        scan.nextLine();
-        System.out.println("Enter the catering service staff id");
-        int csid = scan.nextInt();
-        scan.nextLine();
         System.out.println("Enter the room number");
         int rno = scan.nextInt();
         scan.nextLine();
+        
+        ResultSet roomCategory = statement.executeQuery("SELECT category FROM Room where roomNo = '"+rno+"'");
+        String category = null;
+            if (roomCategory.next()) {
+            category = roomCategory.getString(1);
+        }
+        int rsid=0,csid=0;
+        if(category.equals("Presidential Suite")){
+        System.out.println("Enter the room service staff id");
+        rsid = scan.nextInt();
+        scan.nextLine();
+        System.out.println("Enter the catering service staff id");
+        csid = scan.nextInt();
+        scan.nextLine();
+        }
         int available = 1;
         String nullValue = NULL;
         ResultSet result;
         try
         {
-            ResultSet roomCategory = statement.executeQuery("SELECT category FROM Room where roomNo = '"+rno+"'");
-            String category = null;
-            if (roomCategory.next()) {
-            category = roomCategory.getString(1);
-            }
             result = statement.executeQuery("UPDATE Room SET availability = "+available+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
             if(category.equals("Presidential Suite")){
             result = statement.executeQuery("UPDATE PresidentialSuite SET RoomServiceStaffID = "+nullValue+" AND CateringServiceStaffID = "+nullValue+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
