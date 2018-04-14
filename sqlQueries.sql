@@ -231,20 +231,20 @@ INSERT INTO FrontDeskStaff(staffID) VALUES (108);
 
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (5939846, '980 TRT St , Raleigh NC');
 INSERT INTO PaymentInfo_payment(paymentID, ssn, paymentType) VALUES (1, 5939846, 'card');
-INSERT INTO Card_payment(paymentID, type, cardNo) VALUES (1, 'VISA', '1052');
 INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv) VALUES ('1052', 'David', 'VISA', '01/15/2022', 212);
+INSERT INTO Card_payment(paymentID, type, cardNo) VALUES (1, 'VISA', '1052');
 
 
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (7778352, '7720 MHT St , Greensboro NC');
 INSERT INTO PaymentInfo_payment(paymentID, ssn, paymentType) VALUES (2, 7778352, 'card');
-INSERT INTO Card_payment(paymentID, type, cardNo) VALUES (2, 'hotel card', '3020');
 INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv) VALUES ('3020', 'Sarah', 'hotel card', '01/01/2022', 012);
+INSERT INTO Card_payment(paymentID, type, cardNo) VALUES (2, 'hotel card', '3020');
 
 
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (8589430, '231 DRY St , Rochester NY 78');
 INSERT INTO PaymentInfo_payment(paymentID, ssn, paymentType) VALUES (3, 8589430, 'card');
-INSERT INTO Card_payment(paymentID, type, cardNo) VALUES (3, 'VISA', '2497');
 INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv) VALUES ('2497', 'Joseph', 'VISA', '05/01/2021', 512);
+INSERT INTO Card_payment(paymentID, type, cardNo) VALUES (3, 'VISA', '2497');
 
 
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (4409328, '24 BST Dr , Dallas TX 14');
