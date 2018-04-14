@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 public class HotelUtility {
     private static final String NULL = null;
+    private static Connection connection =  null;
+    public HotelUtility(Connection connection){
+        this.connection = connection;
+    }
     public int getBillingID(Statement statement,String hotelID,String roomNo){
         Scanner scan = new Scanner(System.in);
         try{
@@ -323,31 +327,44 @@ public class HotelUtility {
         BigInteger sphone = scan.nextBigInteger();
         scan.nextLine();
         System.out.println("Enter the hotel id in which the staff works");
-        int hid = scan.nextInt();        
+        int hid = scan.nextInt();       
         try
         {
-            ResultSet result = statement.executeQuery("INSERT INTO Staff(name,age,jobTitle,dept,ph,hotelID)" +  "VALUES ('"+sname+"','"+sage+"', '"+sjobtitle+"','"+sdept+"','"+sphone+"','"+hid+"')");
+            //*********************************************************************************************************
+            connection.setAutoCommit(false);
+            int result = statement.executeUpdate("INSERT INTO Staff(name,age,jobTitle,dept,ph,hotelID)" +  "VALUES ('"+sname+"','"+sage+"', '"+sjobtitle+"','"+sdept+"','"+sphone+"','"+hid+"')");
             System.out.println("Staff information has been entered");
             int idFetched = statement.executeUpdate("SELECT staffID FROM Staff ORDER BY staffID desc LIMIT 1");
             int availability = 1;
-            if(sdept == "FrontDeskStaff") {
-            	result = statement.executeQuery("INSERT INTO FrontDeskStaff " +  "VALUES ('"+idFetched+"')");
+            if(sdept.equals("FrontDeskStaff")) {
+            	result = statement.executeUpdate("INSERT INTO FrontDeskStaff " +  "VALUES ('"+idFetched+"')");
             }
-            else if(sdept == "RoomServiceStaff") {
-            	result = statement.executeQuery("INSERT INTO RoomServiceStaff " +  "VALUES ('"+idFetched+"','"+availability+"')");
+            else if(sdept.equals("RoomServiceStaff")) {
+            	result = statement.executeUpdate("INSERT INTO RoomServiceStaff " +  "VALUES ('"+idFetched+"','"+availability+"')");
             }
-            else if(sdept == "CateringServiceStaff") {
-            	result = statement.executeQuery("INSERT INTO CateringServiceStaff " +  "VALUES ('"+idFetched+"','"+availability+"')");
+            else if(sdept.equals("CateringServiceStaff")) {
+            	result = statement.executeUpdate("INSERT INTO CateringServiceStaff " +  "VALUES ('"+idFetched+"','"+availability+"')");
             }
-            else if(sdept == "Manager") {
-            	result = statement.executeQuery("INSERT INTO Manager " +  "VALUES ('"+idFetched+"','"+hid+"')");
+            else if(sdept.equals("Manager")) {
+            	result = statement.executeUpdate("INSERT INTO Manager " +  "VALUES ('"+idFetched+"','"+hid+"')");
             }
             else {
+                connection.rollback();
+                connection.setAutoCommit(true);
             	System.out.println("Enter valid department: FrontDeskStaff,RoomServiceStaff and CateringServiceStaff");
+                return;
             }
+            connection.commit();
+            connection.setAutoCommit(true);
         }catch(SQLException e)
         {
-            e.printStackTrace();
+            try{
+                 connection.rollback();
+                 connection.setAutoCommit(true);
+                 System.out.println("Information not processed. Please check the input values");       
+            }catch(SQLException ex){
+               ex.printStackTrace();
+            }  
         }
         
     }
@@ -670,9 +687,11 @@ public class HotelUtility {
         scan.nextLine();
         System.out.println("Enter the payment type(cash/card)");
         String ptype = scan.nextLine();
-        ResultSet result;
+        int result;
         String ctype = "";
 	String cno = "";
+        //**************************************************************************************************************************
+        connection.setAutoCommit(false);
         if(ptype.equals("card")){
             System.out.println("Enter the card type (hotel_card/VISA/MASTER)");
             ctype = scan.nextLine();
@@ -685,9 +704,8 @@ public class HotelUtility {
             System.out.println("Enter card cvv");
             int cvv  = scan.nextInt();
             scan.nextLine();
-            result = statement.executeQuery("INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv)" + "VALUES ('"+cno+"', '"+pname+"', '"+ctype+"', '"+expiryDate+"', '"+cvv+"')");
-        }     
-
+            result = statement.executeUpdate("INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv)" + "VALUES ('"+cno+"', '"+pname+"', '"+ctype+"', '"+expiryDate+"', '"+cvv+"')");
+        }
         System.out.println("Enter the payer ssn");
         int pssn = scan.nextInt();
         scan.nextLine();
@@ -695,14 +713,14 @@ public class HotelUtility {
         System.out.println("Enter the billing address");
         String paddress = scan.nextLine();
         
-        result = statement.executeQuery("INSERT INTO PaymentInfo_payer(ssn, address)" + "VALUES ('"+pssn+"', '"+paddress+"')");
-        result = statement.executeQuery("INSERT INTO PaymentInfo_payment(ssn, paymentType) VALUES ('"+pssn+"', '"+ptype+"')");
-        result = statement.executeQuery("SELECT paymentID FROM PaymentInfo_payment ORDER BY paymentID DESC LIMIT 1");
-          if (result.next()) {
-          pid = result.getInt(1);
+        result = statement.executeUpdate("INSERT INTO PaymentInfo_payer(ssn, address)" + "VALUES ('"+pssn+"', '"+paddress+"')");
+        result = statement.executeUpdate("INSERT INTO PaymentInfo_payment(ssn, paymentType) VALUES ('"+pssn+"', '"+ptype+"')");
+        ResultSet presult = statement.executeQuery("SELECT paymentID FROM PaymentInfo_payment ORDER BY paymentID DESC LIMIT 1");
+          if (presult.next()) {
+          pid = presult.getInt(1);
           }
         if(ptype.equals("card")){
-          result = statement.executeQuery("INSERT INTO Card_payment(paymentID, type, cardNo)" + "VALUES ('"+pid+"', '"+ctype+"', '"+cno+"')");
+          result = statement.executeUpdate("INSERT INTO Card_payment(paymentID, type, cardNo)" + "VALUES ('"+pid+"', '"+ctype+"', '"+cno+"')");
         } 
         System.out.println("Enter the room number");
         int rno = scan.nextInt();
@@ -714,7 +732,7 @@ public class HotelUtility {
         String sTime = scan.nextLine();
         scan.nextLine();
         int notAvailable = 0;
-            ResultSet roomCategory = statement.executeQuery("SELECT category FROM Room where roomNo = '"+rno+"'");
+            ResultSet roomCategory = statement.executeQuery("SELECT category FROM Room where roomNo = '"+rno+"' AND hotelID = '"+hid+"' ");
             String category = null;
             if (roomCategory.next()) {
             category = roomCategory.getString(1);
@@ -727,17 +745,49 @@ public class HotelUtility {
                csid = scan.nextInt();
                scan.nextLine();
              }            
-            result = statement.executeQuery("INSERT INTO BillingInfo(paymentID,startTime,guestCount,customerID,hotelID,staffID,roomNo)" +  "VALUES ('"+pid+"','"+sTime+"','"+gcount+"','"+cid+"','"+hid+"','"+sid+"','"+rno+"')");
-            result = statement.executeQuery("UPDATE Room SET availability = "+notAvailable+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
+            result = statement.executeUpdate("INSERT INTO BillingInfo(paymentID,startTime,guestCount,customerID,hotelID,staffID,roomNo)" +  "VALUES ('"+pid+"','"+sTime+"','"+gcount+"','"+cid+"','"+hid+"','"+sid+"','"+rno+"')");
+            result = statement.executeUpdate("UPDATE Room SET availability = "+notAvailable+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
+            if(result == 0){
+           connection.rollback();
+           connection.setAutoCommit(true);
+           System.out.println("Information not processed. Please check your values");
+           return;
+            } 
             if(category.equals("Presidential Suite")){
-            result = statement.executeQuery("UPDATE PresidentialSuite SET RoomServiceStaffID = "+rsid+",CateringServiceStaffID = "+csid+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
-            result = statement.executeQuery("UPDATE RoomServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+rsid+"");
-            result = statement.executeQuery("UPDATE CateringServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+csid+"");
-            }
+            result = statement.executeUpdate("UPDATE PresidentialSuite SET RoomServiceStaffID = "+rsid+",CateringServiceStaffID = "+csid+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
+            if(result == 0){
+           connection.rollback();
+           connection.setAutoCommit(true);
+           System.out.println("Information not processed. Please check your values");
+           return;
+            } 
+            result = statement.executeUpdate("UPDATE RoomServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+rsid+"");
+            if(result == 0){
+           connection.rollback();
+           connection.setAutoCommit(true);
+           System.out.println("Information not processed. Please check your values");
+           return;
+            } 
+            result = statement.executeUpdate("UPDATE CateringServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+csid+"");
+           if(result == 0){
+           connection.rollback();
+           connection.setAutoCommit(true);
+           System.out.println("Information not processed. Please check your values");
+           return;
+           }  
+           }
+            connection.commit();
+            connection.setAutoCommit(true);
             System.out.println("Customer has been checked in");
         }catch(SQLException e)
         {
-            e.printStackTrace();
+               try{
+                  connection.rollback();
+                  connection.setAutoCommit(true);
+                  System.out.println("Information not processed. Please check your values");
+               }catch(SQLException ex){
+                  ex.printStackTrace();
+               }
         }
     }
     //Function to release rooms 
