@@ -556,9 +556,9 @@ public class HotelUtility {
         try {
             ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
             ResultSetMetaData rsMetaData = result.getMetaData();
-        System.out.format("%n%-25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4));
+        System.out.format("%n%-25s%25s%35s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4));
             while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4));
+                System.out.format("%-25s%25s%35s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4));
         }
             }catch(SQLException e)
         {
@@ -573,7 +573,7 @@ public class HotelUtility {
 	    int availability = 1;
 	    ResultSet result1  = statement.executeQuery("SELECT roomNo FROM Room WHERE hotelID = '"+hid+"' AND category = '"+rcategory+"' AND availability='"+availability+"'");
 	    ResultSetMetaData rsMetaData = result1.getMetaData();
-	    if(result1.next())
+	    if(result1.isBeforeFirst())
 	    {
 	    	System.out.format("%n%-25s%n%n",rsMetaData.getColumnName(1));
 		    while (result1.next()) {
