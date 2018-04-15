@@ -566,7 +566,7 @@ public class HotelUtility {
         }
       	ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
         //add printing statement
-	    System.out.println("The hotel Id and room category");
+	    System.out.println("The hotel Id and room category(Economy/Presidential/Deluxe/Executive)");
 	    int hid = scan.nextInt();
             scan.nextLine();
 	    String rcategory = scan.nextLine();
@@ -593,9 +593,9 @@ public class HotelUtility {
       	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
             ResultSetMetaData rsMetaData = result.getMetaData();
-            System.out.format("%n%-25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4));
+            System.out.format("%n%-25s%25s%35s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4));
             while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4));
+                System.out.format("%-25s%25s%35s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4));
             }
             }catch(SQLException e)
             {
@@ -618,15 +618,15 @@ public class HotelUtility {
 	    try {
             ResultSet resultCust = statement.executeQuery("SELECT * FROM Customer");
             ResultSetMetaData rsMetaData = resultCust.getMetaData();
-            System.out.format("%n%-25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5));
+            System.out.format("%n%-25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2));
             while (resultCust.next()) {
-                System.out.format("%-25s%25s%25s%25s%25s%n",resultCust.getString(1), resultCust.getString(2), resultCust.getString(3), resultCust.getString(4), resultCust.getString(5));
+                System.out.format("%-25s%25s%n",resultCust.getString(1), resultCust.getString(2));
             }
             }catch(SQLException e)
             {
             e.printStackTrace();
             }
-	    System.out.println("The Hotel information");
+	   /* System.out.println("The Hotel information");
   	    try {
             ResultSet resultHotel = statement.executeQuery("SELECT * FROM Hotel");
             ResultSetMetaData rsMetaData = resultHotel.getMetaData();
@@ -637,14 +637,14 @@ public class HotelUtility {
             }catch(SQLException e)
             {
             e.printStackTrace();
-            }
+            }*/
   	    System.out.println("The Staff information");
 	    try{
-            ResultSet resultStaff = statement.executeQuery("SELECT * FROM Staff");
+            ResultSet resultStaff = statement.executeQuery("SELECT staffID,hotelID,name,jobTitle FROM Staff");
             ResultSetMetaData rsMetaData = resultStaff.getMetaData();
-            System.out.format("%n%-25s%25s%25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7));
+            System.out.format("%n%-25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4));
             while (resultStaff.next()) {
-                System.out.format("%-25s%25s%25s%25s%25s%25s%25s%n",resultStaff.getString(1), resultStaff.getString(2), resultStaff.getString(3), resultStaff.getString(4),resultStaff.getString(5),resultStaff.getString(6),resultStaff.getString(7));
+                System.out.format("%-25s%25s%25s%25s%n",resultStaff.getString(1), resultStaff.getString(2), resultStaff.getString(3), resultStaff.getString(4));
             }
             }catch(SQLException e)
             {
@@ -682,13 +682,13 @@ public class HotelUtility {
         //**************************************************************************************************************************
         connection.setAutoCommit(false);
         if(ptype.equals("card")){
-            System.out.println("Enter the card type (hotel_card/VISA/MASTER)");
+            System.out.println("Enter the card type (hotel card/VISA/MASTER)");
             ctype = scan.nextLine();
             System.out.println("Enter card number");
             cno = scan.nextLine();
             System.out.println("Enter the payer name");
             String pname = scan.nextLine();
-            System.out.println("Enter expiry date of the card");
+            System.out.println("Enter expiry date of the card(yyyy-mm-dd)");
             String expiryDate = scan.nextLine();
             System.out.println("Enter card cvv");
             int cvv  = scan.nextInt();
