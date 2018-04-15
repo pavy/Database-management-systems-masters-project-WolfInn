@@ -825,6 +825,9 @@ public class HotelUtility {
     }
 	public void reportOccupancyByHotel(Statement statement) {
 		try {
+			/*
+			 * Query to generate report for percentage of rooms occupied grouped by their hotelID
+			 */
 			int nOccupiedBit = 0;
 			ResultSet result = statement
 					.executeQuery("SELECT Total_Rooms.hotelID as 'HOTEL ID', Total_Rooms.Rooms AS 'Total Rooms', IFNULL(Occupied_Rooms.Occupied,0) "
@@ -890,6 +893,9 @@ public class HotelUtility {
 
 	public void reportOccupancyByDateRange(Statement statement) {
 		try {
+			/*
+			 * Query to generate report for percentage of rooms occupied within a date range 
+			 */
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Enter start date");
 			String st = sc.nextLine();
@@ -929,6 +935,9 @@ public class HotelUtility {
 
 	public void reportOccupancyByCity(Statement statement) {
 		try {
+			/*
+			 * Query to show the details of percentage of rooms occupied in all hotels grouped by city
+			 */
 			/*
 			 * SELECT  city, SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END) AS OCCUPIED,
 IFNULL (SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END)/COUNT(*)*100,0) AS 'Percentage Occupied'
@@ -976,7 +985,9 @@ FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city
 
 	public void reportStaffInfoGroupedByRole(Statement statement) {
 		try {
-			
+			/*
+			 * query to select the staff detail, grouped by their department 
+			 */
 			ResultSet result = statement
 					.executeQuery("select * from Staff  ORDER BY Staff.dept");
 			ResultSetMetaData rsMetaData = result.getMetaData();
@@ -997,6 +1008,9 @@ FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city
 	
 	public void reportStaffServingCustomerDuringStay(Statement statement){
 		try{
+			/*
+			 * Print the details of staff serving a customer serving during his stay
+			 */
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Enter billingID");//Doubt
 			int bID = sc.nextInt();
@@ -1017,56 +1031,99 @@ FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city
 		}
 		
 	}
-	
-	public void reportRevenueEarnedInDateRange(Statement statement){
+	private int showAllBillingIDSOfCustomer(int cID, Statement statement) {
+		// TODO Auto-generated method stub
 		try
 		{
-			Scanner sc = new Scanner(System.in);
-			System.out.println("Enter start date");
-			String st = sc.nextLine();
-			while(!isValidFormat(st))
-			{
-				System.out.println("Enter start date");
-				st = sc.nextLine();
-			}
-			System.out.println("Enter end date");
-			String et = sc.nextLine();
-			while(!isValidFormat(et))
-			{
-				System.out.println("Enter end date");
-				et = sc.nextLine();
-			}
-			System.out.println("Enter hotelID");
-			int hotelID = sc.nextInt();//Doubt
 			ResultSet result = statement
-					.executeQuery("SELECT IFNULL(SUM(amount),0) AS REVENUE from BillingInfo where hotelID="+hotelID
-							+" AND startTime>='"+st+"' AND endTime<='"+et+"'");
+					.executeQuery("select bID, startTime, endTime from BillingInfo where customerID="+cID+" order by startTime;");
 			ResultSetMetaData rsMetaData = result.getMetaData();
-			System.out.format("%n%-25s%n%n", rsMetaData.getColumnName(1));
+			System.out.format("%n%-25s%16s%16s%n%n", rsMetaData.getColumnName(1), rsMetaData.getColumnName(2), rsMetaData.getColumnName(3));
 			while (result.next()) {
-				System.out.format("%-25s%n", result.getString(1));
+				System.out.format("%-25s%16s%16s%n", result.getString(1), result.getString(2), result.getString(3));
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
+		return 0;
 	}
-	
-	static boolean isValidFormat(String value)
-	{
-		Date dt=null;
+
+	private void showAllCustomers(Statement statement) {
+		// TODO Auto-generated method stub
 		try
 		{
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date parsedDate = formatter.parse(value);
-			if(formatter.format(parsedDate).toString().equals(value))
-				return true;
-			
+			ResultSet result = statement
+					.executeQuery("select customerID, name from Customer");
+			ResultSetMetaData rsMetaData = result.getMetaData();
+			System.out.format("%n%-25s%16s%n%n", rsMetaData.getColumnName(1), rsMetaData.getColumnName(2));
+			while (result.next()) {
+				System.out.format("%-25s%16s%n", result.getString(1), result.getString(2));
+			}
 		}
 		catch(Exception e)
 		{
-			System.out.println("Incorrect date format, please enter in the format(yyyy-MM-dd HH:mm:ss):");
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public void reportRevenueEarnedInDateRange(Statement statement){
+		try
+		{
+			/*
+			 * Based on user input of start and end date, we sum over the amount
+			 * of all billing IDs within the date range using the following
+			 * query
+			 */
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Enter start date");
+			String st = sc.nextLine();
+			while (!isValidFormat(st)) {
+				System.out.println("Enter start date");
+				st = sc.nextLine();
+			}
+			System.out.println("Enter end date");
+			String et = sc.nextLine();
+			while (!isValidFormat(et)) {
+				System.out.println("Enter end date");
+				et = sc.nextLine();
+			}
+			System.out.println("Enter hotelID");
+			int hotelID = sc.nextInt();// Doubt
+			ResultSet result = statement
+					.executeQuery("SELECT IFNULL(SUM(amount),0) AS REVENUE from BillingInfo where hotelID="
+							+ hotelID
+							+ " AND startTime>='"
+							+ st
+							+ "' AND endTime<='" + et + "'");
+			ResultSetMetaData rsMetaData = result.getMetaData();
+			System.out.format("%n%-25s%n%n", rsMetaData.getColumnName(1));
+			while (result.next()) {
+				System.out.format("%-25s%n", result.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	static boolean isValidFormat(String value) {
+		/*
+		 * Function to check valid date and time for all dates that the user
+		 * inputs, so as to check valid format of date
+		 */
+		Date dt = null;
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+			Date parsedDate = formatter.parse(value);
+			if (formatter.format(parsedDate).toString().equals(value))
+				return true;
+
+		} catch (Exception e) {
+			System.out
+					.println("Incorrect date format, please enter in the format(yyyy-MM-dd HH:mm:ss):");
 		}
 		return false;
 	}
