@@ -444,9 +444,9 @@ public class HotelUtility {
 	    try{
 	    ResultSet result = statement.executeQuery("SELECT * FROM Staff");
             ResultSetMetaData rsMetaData = result.getMetaData();
-            System.out.format("%n%-20s%20s%20s%20s%20s%20s%20s%20s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
+            System.out.format("%n%-10s%20s%10s%20s%20s%10s%10s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
             while (result.next()) {
-                System.out.format("%-20s%20s%20s%20s%20s%20s%20s%20s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
+                System.out.format("%-10s%20s%10s%20s%20s%10s%10s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
             }
             }catch(SQLException e)
             {
@@ -456,33 +456,10 @@ public class HotelUtility {
 	    System.out.println("Enter the staff id which needs to be deleted");
 	    int sid = scan.nextInt();
             scan.nextLine();
-	    System.out.println("Enter the staff jobtitle to which the staff to be deleted has");
-	    String jobtitle = scan.nextLine();
-            ResultSet result1;  
 	    try
              {
-	    	    if(jobtitle.equals("Front Desk Staff")){
-	    	    statement.executeUpdate("DELETE FROM Staff where staffID = "+sid+"");
-	            System.out.println("Staff information has been deleted");
-	    	    }
-	    	    else if(jobtitle.equals("Room Staff")) {
-		    	result1 = statement.executeQuery("DELETE FROM RoomServiceStaff where staffID = "+sid+"");
-		    	statement.executeUpdate("DELETE FROM Staff where stafflID = "+sid+"");
-		        System.out.println("Staff information has been deleted");
-		    	}
-	    	    else if(jobtitle.equals("Catering Staff")){
-			result1 = statement.executeQuery("DELETE FROM CateringServiceStaff where staffID = "+sid+"");
-			statement.executeUpdate("DELETE FROM Staff where staffID = "+sid+"");
-			System.out.println("Staff information has been deleted");
-			}
-	    	    else if(jobtitle.equals("Manager")) {
-	    		result1 = statement.executeQuery("DELETE FROM Manager where staffID = "+sid+"");
-	    		statement.executeUpdate("DELETE FROM Staff where staffID = "+sid+"");
-	    		System.out.println("Staff information has been deleted");
-	    		}
-	    	    else {
-	        System.out.println("Enter valid department: Manager,FrontDeskStaff,RoomServiceStaff and CateringServiceStaff");
-	        }
+	    	statement.executeUpdate("DELETE FROM Staff where staffID = "+sid+"");
+    		System.out.println("Staff information has been deleted");
             
         }catch(SQLException e)
         {
