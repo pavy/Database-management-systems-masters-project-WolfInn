@@ -404,9 +404,9 @@ public class HotelUtility {
 	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Staff");
             ResultSetMetaData rsMetaData = result.getMetaData();
-            System.out.format("%n%-10s%20s%20s%10s%20s%20s%10s%10s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
+            System.out.format("%n%-10s%20s%10s%20s%20s%20s%10s%20s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
             while (result.next()) {
-                System.out.format("%-10s%20s%20s%10s%20s%20s%10s%10s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
+                System.out.format("%-10s%20s%10s%20s%20s%20s%10s%20s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
             }
             }catch(SQLException e)
             {
@@ -420,10 +420,7 @@ public class HotelUtility {
         System.out.println("Enter the age of the staff member to update");
         int sage = scan.nextInt();
         scan.nextLine();
-        System.out.println("Enter the job title of the staff member to update");
-        String sjobtitle = scan.nextLine();
-        System.out.println("Enter the department of the staff to update");
-        String sdept = scan.nextLine();
+        
         System.out.println("Enter the address of the staff member");
         String saddr = scan.nextLine();
         System.out.println("Enter the phone number of the staff to update");
@@ -434,7 +431,7 @@ public class HotelUtility {
         ResultSet result1;
         try
         {
-            result1 = statement.executeQuery("UPDATE Staff SET Name = '"+sname+"', age = '"+sage+"', jobTitle = '"+sjobtitle+"', dept = '"+sdept+"',address='"+saddr+"', ph = '"+sphone+"', hotelID = '"+hid+"' where staffID = "+sid+"");
+            result1 = statement.executeQuery("UPDATE Staff SET Name = '"+sname+"', age = '"+sage+"',address='"+saddr+"', ph = '"+sphone+"', hotelID = '"+hid+"' where staffID = "+sid+"");
         }catch(SQLException e)
         {
             e.printStackTrace();
