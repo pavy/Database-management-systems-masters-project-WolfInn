@@ -336,16 +336,16 @@ public class HotelUtility {
             System.out.println("Staff information has been entered");
             int idFetched = statement.executeUpdate("SELECT staffID FROM Staff ORDER BY staffID desc LIMIT 1");
             int availability = 1;
-            if(sdept.equals("FrontDeskStaff")) {
+            if(sjobtitle.equals("Front Desk Staff")) {
             	result = statement.executeUpdate("INSERT INTO FrontDeskStaff " +  "VALUES ('"+idFetched+"')");
             }
-            else if(sdept.equals("RoomServiceStaff")) {
+            else if(sjobtitle.equals("Room Service Staff")) {
             	result = statement.executeUpdate("INSERT INTO RoomServiceStaff " +  "VALUES ('"+idFetched+"','"+availability+"')");
             }
-            else if(sdept.equals("CateringServiceStaff")) {
+            else if(sjobtitle.equals("Catering Staff")) {
             	result = statement.executeUpdate("INSERT INTO CateringServiceStaff " +  "VALUES ('"+idFetched+"','"+availability+"')");
             }
-            else if(sdept.equals("Manager")) {
+            else if(sjobtitle.equals("Manager")) {
             	result = statement.executeUpdate("INSERT INTO Manager " +  "VALUES ('"+idFetched+"','"+hid+"')");
             }
             else {
@@ -404,24 +404,6 @@ public class HotelUtility {
         try
         {
             result1 = statement.executeQuery("UPDATE Staff SET Name = '"+sname+"', age = '"+sage+"', jobTitle = '"+sjobtitle+"', dept = '"+sdept+"', ph = '"+sphone+"', hotelID = '"+hid+"' where staffID = "+sid+"");
-            System.out.println("Staff information has been updated");
-            System.out.println("Enter availability");
-            int availability = scan.nextInt();
-            if(sdept.equals("FrontDeskStaff")) {
-            //	ResultSet result = statement.executeUpdate("INSERT INTO FrontDeskStaff " +  "VALUES ('"+idFetched+"')");
-            }
-            else if(sdept.equals("RoomServiceStaff")){
-            	result1 = statement.executeQuery("UPDATE RoomServiceStaff SET availability = '"+availability+"' where staffID = "+sid+"");
-            }
-            else if(sdept.equals("CateringServiceStaff")) {
-            	result1 = statement.executeQuery("UPDATE CateringServiceStaff SET availability = '"+availability+"' where staffID = "+sid+"");
-            }
-            else if(sdept.equals("Manager")) {
-                result1 = statement.executeQuery("UPDATE Manager SET hotelID = '"+hid+"' where staffID = "+sid+"");
-            }
-            else {
-            	System.out.println("Enter valid department: Manager,FrontDeskStaff,RoomServiceStaff and CateringServiceStaff");
-            }
         }catch(SQLException e)
         {
             e.printStackTrace();
@@ -446,28 +428,26 @@ public class HotelUtility {
 	    System.out.println("Enter the staff id which needs to be deleted");
 	    int sid = scan.nextInt();
             scan.nextLine();
-	    System.out.println("Enter the staff department to which the staff to be deleted belongs to");
-	    String dept = scan.nextLine();
+	    System.out.println("Enter the staff jobtitle to which the staff to be deleted has");
+	    String jobtitle = scan.nextLine();
             ResultSet result1;  
 	    try
              {
-                    System.out.println("Hello1");
-	    	    if(dept.equals("FrontDeskStaff")){
-	    	   // result1 = statement.executeQuery("DELETE FROM FrontDeskStaff where staffID = "+sid+"");
+	    	    if(jobtitle.equals("Front Desk Staff")){
 	    	    statement.executeUpdate("DELETE FROM Staff where staffID = "+sid+"");
-	        System.out.println("Staff information has been deleted");
+	            System.out.println("Staff information has been deleted");
 	    	    }
-	    	    else if(dept.equals("RoomServiceStaff")) {
+	    	    else if(jobtitle.equals("Room Staff")) {
 		    	result1 = statement.executeQuery("DELETE FROM RoomServiceStaff where staffID = "+sid+"");
 		    	statement.executeUpdate("DELETE FROM Staff where stafflID = "+sid+"");
-		    System.out.println("Staff information has been deleted");
+		        System.out.println("Staff information has been deleted");
 		    	}
-	    	    else if(dept.equals("CateringServiceStaff")){
+	    	    else if(jobtitle.equals("Catering Staff")){
 			result1 = statement.executeQuery("DELETE FROM CateringServiceStaff where staffID = "+sid+"");
 			statement.executeUpdate("DELETE FROM Staff where staffID = "+sid+"");
 			System.out.println("Staff information has been deleted");
 			}
-	    	    else if(dept.equals("Manager")) {
+	    	    else if(jobtitle.equals("Manager")) {
 	    		result1 = statement.executeQuery("DELETE FROM Manager where staffID = "+sid+"");
 	    		statement.executeUpdate("DELETE FROM Staff where staffID = "+sid+"");
 	    		System.out.println("Staff information has been deleted");
@@ -615,14 +595,11 @@ public class HotelUtility {
 	    int rno = scan.nextInt();
 	    int availability = 1;
 	    ResultSet result1 = statement.executeQuery("SELECT (CASE WHEN availability = '"+availability+"' THEN 'Available' ELSE 'Not Available' END) AS 'Room Availability' FROM Room WHERE hotelID = '"+hid+"' AND roomNo = '"+rno+"'");
-	   // ResultSetMetaData rsMetaData = result1.getMetaData();
-           // System.out.format("%n%-25s%n%n",rsMetaData.getColumnName(1));
 	    while (result1.next()) {
 	        System.out.format("%-25s%n",result1.getString(1));
 	    }
     }
     //Function to assign rooms to customers accroding to the request and availability
-    //Correct last two functionalities
     public void assignRoom(Statement statement) throws SQLException {
       	Scanner scan = new Scanner(System.in);
   	    System.out.println("The Customer information");
@@ -737,7 +714,7 @@ public class HotelUtility {
             if (roomCategory.next()) {
             category = roomCategory.getString(1);
             }
-            if(category.equals("Presidential Suite")){
+            if(category.equals("Presidential")){
                System.out.println("Enter the room service staff id");
                rsid = scan.nextInt();
                scan.nextLine();
@@ -753,7 +730,7 @@ public class HotelUtility {
            System.out.println("Information not processed. Please check your values");
            return;
             } 
-            if(category.equals("Presidential Suite")){
+            if(category.equals("Presidential")){
             result = statement.executeUpdate("UPDATE PresidentialSuite SET RoomServiceStaffID = "+rsid+",CateringServiceStaffID = "+csid+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
             if(result == 0){
            connection.rollback();
@@ -821,7 +798,7 @@ public class HotelUtility {
             category = roomCategory.getString(1);
         }
         int rsid=0,csid=0;
-        if(category.equals("Presidential Suite")){
+        if(category.equals("Presidential")){
         System.out.println("Enter the room service staff id");
         rsid = scan.nextInt();
         scan.nextLine();
@@ -835,7 +812,7 @@ public class HotelUtility {
         try
         {
             result = statement.executeQuery("UPDATE Room SET availability = "+available+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
-            if(category.equals("Presidential Suite")){
+            if(category.equals("Presidential")){
             result = statement.executeQuery("UPDATE PresidentialSuite SET RoomServiceStaffID = "+nullValue+" AND CateringServiceStaffID = "+nullValue+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
             result = statement.executeQuery("UPDATE RoomServiceStaff SET availability = "+available+" WHERE staffID = "+rsid+"");
             result = statement.executeQuery("UPDATE CateringServiceStaff SET availability = "+available+" WHERE staffID = "+csid+"");
