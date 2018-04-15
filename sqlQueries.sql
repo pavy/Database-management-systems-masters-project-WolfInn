@@ -72,7 +72,7 @@ CONSTRAINT room_staff_fk FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELET
 
 CREATE TABLE CateringServiceStaff (
 staffID INT PRIMARY KEY,
-availability BOOLEAN NOT NULL,
+availability BOOLEAN NOT NULL DEFAULT 1,
 CONSTRAINT catering_staff_fk FOREIGN KEY(staffID) REFERENCES Staff(staffID) ON DELETE CASCADE
 
 );
@@ -189,28 +189,37 @@ INSERT INTO Room(hotelID,roomNo, category, occupancy, rate, availability) VALUES
 INSERT INTO Room(hotelID,roomNo, category, occupancy, rate) VALUES (0004, 01, 'Presidential', 4, 5000);
 INSERT INTO Room(hotelID,roomNo, category, occupancy, rate) VALUES (0001, 05, 'Deluxe', 2, 200);
 
-INSERT INTO Customer(name, dob, phone, email) VALUES ('David', '01/30/1980', 123, 'david@gmail.com');
-INSERT INTO Customer(name, dob, phone, email) VALUES ('Sarah', '01/30/1971', 456, 'sarah@gmail.com');
-INSERT INTO Customer(name, dob, phone, email) VALUES ('Joseph', '01/30/1987', 789, 'joseph@gmail.com');
-INSERT INTO Customer(name, dob, phone, email) VALUES ('Lucy', '01/30/1985', 213, 'lucy@gmail.com');
+INSERT INTO Customer(name, dob, phone, email) VALUES ('David', '1980-01-30', 123, 'david@gmail.com');
+INSERT INTO Customer(name, dob, phone, email) VALUES ('Sarah', '1971-01-30', 456, 'sarah@gmail.com');
+INSERT INTO Customer(name, dob, phone, email) VALUES ('Joseph', '1987-01-30', 789, 'joseph@gmail.com');
+INSERT INTO Customer(name, dob, phone, email) VALUES ('Lucy', '1985-01-30', 213, 'lucy@gmail.com');
 
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Mary', 40, 'Manager', 'Management', 654, 0001, '90 ABC St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('John', 45, 'Manager', 'Management', 564, 0002, '798 XYZ St , Rochester NY 54');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Carol', 55, 'Manager', 'Management', 546, 0003, '351 MH St , Greensboro NC 27');	
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Emma', 55, 'Front Desk Staff', 'Management', 546, 0001, '49 ABC St , Raleigh NC 27');	
-INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Ava', 55, 'Catering Staff', 'Catering', 777, 0001, '4425 RG St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Ava', 55, 'Catering Staff', 'Catering', 777, 0001, '425 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Peter', 52, 'Manager', 'Management', 724, 0004, '475 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Olivia', 27, 'Front Desk Staff', 'Management', 799, 0004, '325 PD St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Jane', 27, 'Front Desk Staff', 'Management', 798, 0002, '329 PD St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Raj', 27, 'Front Desk Staff', 'Management', 711, 0003, '125 PD St , Raleigh NC 27');
 /* Services offered to be included in other table - clarify front desk staff not available for checkin in Hotel 0002 and 0003*/
 
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Karl', 25, 'Catering Staff', 'Catering', 111, 0002, '41 CD St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Seth', 30, 'Catering Staff', 'Catering', 222, 0003, '95 ZY St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Monice', 32, 'Catering Staff', 'Catering', 333, 0004, '25 PD St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Rachel', 45, 'Room Service Staff', 'Room Service', 444, 0001, '411 ABC St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Joey', 50, 'Room Service Staff', 'Room Service', 555, 0002, '411 XYZ St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Phoebe', 37, 'Room Service Staff', 'Room Service', 777, 0003, '411 ANC St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Chandler', 51, 'Room Service Staff', 'Room Service', 666, 0004, '411 YA St , Raleigh NC 27');
+
+
 
 INSERT INTO Services(serviceID, name) VALUES (1, 'Phone Bills');
 INSERT INTO Services(serviceID, name) VALUES (2, 'Dry cleaning');
 INSERT INTO Services(serviceID, name) VALUES (3, 'Gyms');
-INSERT INTO Services(serviceID, name) VALUES (4, 'Special Request');
-INSERT INTO Services(serviceID, name) VALUES (5, 'Room Service');
+INSERT INTO Services(serviceID, name) VALUES (4, 'Room Service');
+INSERT INTO Services(serviceID, name) VALUES (5, 'Special Request');
 
 
 INSERT INTO Manager(staffID, hotelID) VALUES (100, 0001);
@@ -222,6 +231,14 @@ INSERT INTO Manager(staffID, hotelID) VALUES (105, 0004);
 
 
 INSERT INTO CateringServiceStaff(staffID) VALUES (104);
+INSERT INTO CateringServiceStaff(staffID) VALUES (109);
+INSERT INTO CateringServiceStaff(staffID) VALUES (110);
+INSERT INTO CateringServiceStaff(staffID) VALUES (111);
+
+INSERT INTO RoomServiceStaff(staffID) VALUES (112);
+INSERT INTO RoomServiceStaff(staffID) VALUES (113);
+INSERT INTO RoomServiceStaff(staffID) VALUES (114);
+INSERT INTO RoomServiceStaff(staffID) VALUES (115);
 
 INSERT INTO FrontDeskStaff(staffID) VALUES (106);
 INSERT INTO FrontDeskStaff(staffID) VALUES (103);
