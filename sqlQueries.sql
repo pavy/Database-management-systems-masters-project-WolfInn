@@ -298,7 +298,11 @@ INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endT
 /* Billing info - custID, ssn, billadd, paymentmethod, cardno*/
 
 /* Add Entries into Provides table - after confirmation */
-
+INSERT INTO Provides(qty, staffID, serviceID, bID) VALUES (1, 103, 2, 1);
+INSERT INTO Provides(qty, staffID, serviceID, bID) VALUES (1, 103, 3, 1);
+INSERT INTO Provides(qty, staffID, serviceID, bID) VALUES (1, 103, 3, 2);
+INSERT INTO Provides(qty, staffID, serviceID, bID) VALUES (1, 107, 4, 3);
+INSERT INTO Provides(qty, staffID, serviceID, bID) VALUES (1, 108, 1, 4);
 
 
 
