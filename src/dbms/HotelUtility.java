@@ -16,6 +16,8 @@ public class HotelUtility {
         Scanner scan = new Scanner(System.in);
         try{
             ResultSet result = statement.executeQuery("select bID from BillingInfo WHERE hotelID="+hotelID+" AND roomNo="+roomNo+" AND endTime IS NULL");
+            if(!result.isBeforeFirst())
+            	return -1;
             if(result.next())
                 return result.getInt("bID");
         }
@@ -37,7 +39,7 @@ public class HotelUtility {
         System.out.print("Enter Room number: ");
         String roomNo = scan.nextLine();
         String bID = Integer.toString(getBillingID(statement,hotelID,roomNo));
-        if(bID=="-1")
+        if(bID.equals("-1"))
         {
             System.out.println("Room is unoccupied!!");
             return;
@@ -93,7 +95,7 @@ public class HotelUtility {
         System.out.print("Enter Room number: ");
         String roomNo = scan.nextLine();
         String bID = Integer.toString(getBillingID(statement,hotelID,roomNo));
-        if(bID=="-1")
+        if(bID.equals("-1"))
         {
             System.out.println("Room is unoccupied!!");
             return;
@@ -717,9 +719,15 @@ public class HotelUtility {
         System.out.println("Enter the staff id");
         int sid = scan.nextInt();
         scan.nextLine();
+        ResultSet staffAvailability = statement.executeQuery("select hotelID from Staff where staffID="+sid+" and hotelID="+hid);
+        if(!staffAvailability.isBeforeFirst())
+        {
+        	connection.setAutoCommit(true);
+        	System.out.println("The staff doesnt exist in the hotel");
+        	return;
+        }
         System.out.println("Enter the start time in the format YYYY-MM-DD HH:MM:SS");
         String sTime = scan.nextLine();
-        scan.nextLine();
         int notAvailable = 0;
             ResultSet roomCategory = statement.executeQuery("SELECT availability,category FROM Room where roomNo = '"+rno+"' AND hotelID = '"+hid+"' ");
             String category = null;
@@ -773,7 +781,7 @@ public class HotelUtility {
             connection.setAutoCommit(true);
             System.out.println("Customer has been checked in");
          }else{
-            System.out.println("Room not available");   
+            System.out.println("The transaction failed due to incorrect room, hotel or staff information. Please try again.");   
         } 
         }catch(SQLException e)
         {
@@ -789,13 +797,18 @@ public class HotelUtility {
     //Function to release rooms 
     public void releaseRoom(Statement statement) throws SQLException {
       	Scanner scan = new Scanner(System.in);
-		System.out.println("The Hotel information");
+		System.out.println("The Room information");
   	    try {
-            ResultSet resultHotel = statement.executeQuery("SELECT * FROM Hotel");
+            ResultSet resultHotel = statement.executeQuery("SELECT hotelID, roomNo FROM Room where availability=0");
             ResultSetMetaData rsMetaData = resultHotel.getMetaData();
-            System.out.format("%n%-25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4));
+            if(!resultHotel.isBeforeFirst())
+            {
+            	System.out.println("No occupied rooms found!");
+            	return;
+            }
+            System.out.format("%n%-25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2));
             while (resultHotel.next()) {
-                System.out.format("%-25s%25s%25s%25s%n",resultHotel.getString(1), resultHotel.getString(2), resultHotel.getString(3), resultHotel.getString(4));
+                System.out.format("%-25s%25s%n",resultHotel.getString(1), resultHotel.getString(2));
             }
             }catch(SQLException e)
             {
@@ -804,9 +817,9 @@ public class HotelUtility {
   	    System.out.println("Enter the hotel id");
         int hid = scan.nextInt();
         scan.nextLine();
-        System.out.println("Enter the staff id");
+        /*System.out.println("Enter the staff id");
         int sid = scan.nextInt();
-        scan.nextLine();
+        scan.nextLine();*/
         System.out.println("Enter the room number");
         int rno = scan.nextInt();
         scan.nextLine();
@@ -818,12 +831,26 @@ public class HotelUtility {
         }
         int rsid=0,csid=0;
         if(category.equals("Presidential")){
-        System.out.println("Enter the room service staff id");
+        /*System.out.println("Enter the room service staff id");
         rsid = scan.nextInt();
         scan.nextLine();
         System.out.println("Enter the catering service staff id");
         csid = scan.nextInt();
-        scan.nextLine();
+        scan.nextLine();*/
+        	try
+        	{
+        		ResultSet presidentialStaffQuery = statement.executeQuery("SELECT RoomServiceStaffID, CateringServiceStaffID from PresidentialSuite where roomNo="+rno+" and hotelID="+hid);
+            	if(presidentialStaffQuery.next())
+            	{
+            		rsid=Integer.parseInt(presidentialStaffQuery.getString(1));
+            		csid=Integer.parseInt(presidentialStaffQuery.getString(2));
+            	}
+        	}
+        	catch(Exception e)
+        	{
+        		e.printStackTrace();
+        	}
+        	
         }
         int available = 1;
         String nullValue = NULL;
