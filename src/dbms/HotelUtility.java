@@ -709,11 +709,15 @@ public class HotelUtility {
         String sTime = scan.nextLine();
         scan.nextLine();
         int notAvailable = 0;
-            ResultSet roomCategory = statement.executeQuery("SELECT category FROM Room where roomNo = '"+rno+"' AND hotelID = '"+hid+"' ");
+            ResultSet roomCategory = statement.executeQuery("SELECT availability,category FROM Room where roomNo = '"+rno+"' AND hotelID = '"+hid+"' ");
             String category = null;
+            boolean roomavailability = false;
             if (roomCategory.next()) {
-            category = roomCategory.getString(1);
+            roomavailability = roomCategory.getBoolean(1);
+            category = roomCategory.getString(2);
+            System.out.println(roomavailability);
             }
+           if(roomavailability){
             if(category.equals("Presidential")){
                System.out.println("Enter the room service staff id");
                rsid = scan.nextInt();
@@ -756,6 +760,9 @@ public class HotelUtility {
             connection.commit();
             connection.setAutoCommit(true);
             System.out.println("Customer has been checked in");
+         }else{
+            System.out.println("Room not available");   
+        } 
         }catch(SQLException e)
         {
                try{
