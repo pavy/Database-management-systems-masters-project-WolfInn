@@ -573,9 +573,16 @@ public class HotelUtility {
 	    int availability = 1;
 	    ResultSet result1  = statement.executeQuery("SELECT roomNo FROM Room WHERE hotelID = '"+hid+"' AND category = '"+rcategory+"' AND availability='"+availability+"'");
 	    ResultSetMetaData rsMetaData = result1.getMetaData();
-        System.out.format("%n%-25s%n%n",rsMetaData.getColumnName(1));
-	    while (result1.next()) {
-	        System.out.format("%-25s%n",result1.getString(1));
+	    if(result1.next())
+	    {
+	    	System.out.format("%n%-25s%n%n",rsMetaData.getColumnName(1));
+		    while (result1.next()) {
+		        System.out.format("%-25s%n",result1.getString(1));
+		    }
+	    }
+	    else
+	    {
+	    	System.out.println("No rooms available!");
 	    }
 	    
     }
