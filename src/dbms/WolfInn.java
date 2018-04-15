@@ -60,7 +60,7 @@ public class WolfInn {
     		System.out.println("6 - Information on all staff members serving the customer during the stay");
     		System.out.println("7 - Revenue earned by a hotel during a given date range");
 //    		System.out.println("8 - Return to main menu");
-    		HotelUtility obj = new HotelUtility();
+    		HotelUtility obj = new HotelUtility(connection);
     		Scanner scan = new Scanner(System.in);
     		int choice = scan.nextInt();
     		switch (choice) {
@@ -261,7 +261,7 @@ public class WolfInn {
     			System.out.println("5 - Close application");
     
     			int choice = scan.nextInt();
-    			HotelUtility obj = new HotelUtility();
+    			HotelUtility obj = new HotelUtility(connection);
     			switch (choice) {
     			case 1:
     				infoProcessing(statement, connection);
