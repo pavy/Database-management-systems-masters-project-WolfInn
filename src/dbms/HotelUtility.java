@@ -187,7 +187,7 @@ public class HotelUtility {
         BigInteger hnumber = scan.nextBigInteger();
         try
         {
-            ResultSet result1 = statement.executeQuery("UPDATE Hotel SET name = '"+hname+"', address = '"+haddress+"', city='"+hcity+"' phoneNumber = '"+hnumber+"' where hotelID = "+hid+"");
+            ResultSet result1 = statement.executeQuery("UPDATE Hotel SET name = '"+hname+"', address = '"+haddress+"', city='"+hcity+"', phoneNumber = '"+hnumber+"' where hotelID = "+hid);
             System.out.println("Hotel information has been updated");
         }catch(SQLException e)
         {
@@ -359,7 +359,11 @@ public class HotelUtility {
             connection.setAutoCommit(false);
             int result = statement.executeUpdate("INSERT INTO Staff(name,age,jobTitle,dept,ph,hotelID, address)" +  "VALUES ('"+sname+"','"+sage+"', '"+sjobtitle+"','"+sdept+"','"+sphone+"','"+hid+"','"+saddr+"')");
             System.out.println("Staff information has been entered");
-            int idFetched = statement.executeUpdate("SELECT staffID FROM Staff ORDER BY staffID desc LIMIT 1");
+            int idFetched=0;
+            ResultSet result1 = statement.executeQuery("SELECT staffID FROM Staff ORDER BY staffID desc LIMIT 1");
+            if(result1.next()){
+            	idFetched = result1.getInt(1);
+            }
             int availability = 1;
             if(sjobtitle.equals("Front Desk Staff")) {
             	result = statement.executeUpdate("INSERT INTO FrontDeskStaff " +  "VALUES ('"+idFetched+"')");
@@ -400,9 +404,9 @@ public class HotelUtility {
 	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Staff");
             ResultSetMetaData rsMetaData = result.getMetaData();
-            System.out.format("%n%-20s%20s%20s%20s%20s%20s%20s%20s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
+            System.out.format("%n%-10s%20s%20s%10s%20s%20s%10s%10s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
             while (result.next()) {
-                System.out.format("%-20s%20s%20s%20s%20s%20s%20s%20s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
+                System.out.format("%-10s%20s%20s%10s%20s%20s%10s%10s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
             }
             }catch(SQLException e)
             {
