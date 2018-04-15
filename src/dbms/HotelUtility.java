@@ -144,11 +144,13 @@ public class HotelUtility {
     String hname = scan.nextLine();
     System.out.println("Enter address of the hotel");
     String haddress = scan.nextLine();
+    System.out.println("Enter city of the hotel");
+    String hcity = scan.nextLine();
     System.out.println("Enter phone number of the hotel");
     BigInteger hnumber = scan.nextBigInteger();
     try
     {
-        ResultSet result = statement.executeQuery("INSERT INTO Hotel(name,address,phoneNumber)" +  "VALUES ('"+hname+"','"+haddress+"', '"+hnumber+"')");
+        ResultSet result = statement.executeQuery("INSERT INTO Hotel(name,address,phoneNumber,city)" +  "VALUES ('"+hname+"','"+haddress+"', '"+hnumber+"','"+hcity+"')");
         System.out.println("Hotel information has been entered");
     }catch(SQLException e)
     {
@@ -164,9 +166,9 @@ public class HotelUtility {
     	    try {
     	    ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
     	    ResultSetMetaData rsMetaData = result.getMetaData();
-        System.out.format("%n%-25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4));
+        System.out.format("%n%-25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5));
 	    while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4));
+                System.out.format("%-25s%25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
         }
     	    }catch(SQLException e)
         {
@@ -179,11 +181,13 @@ public class HotelUtility {
         String hname = scan.nextLine();
         System.out.println("Enter address of the hotel to update");
         String haddress = scan.nextLine();
+        System.out.println("Enter city of the hotel");
+        String hcity = scan.nextLine();
         System.out.println("Enter phone number of the hotel update");
         BigInteger hnumber = scan.nextBigInteger();
         try
         {
-            ResultSet result1 = statement.executeQuery("UPDATE Hotel SET name = '"+hname+"', address = '"+haddress+"', phoneNumber = '"+hnumber+"' where hotelID = "+hid+"");
+            ResultSet result1 = statement.executeQuery("UPDATE Hotel SET name = '"+hname+"', address = '"+haddress+"', city='"+hcity+"' phoneNumber = '"+hnumber+"' where hotelID = "+hid+"");
             System.out.println("Hotel information has been updated");
         }catch(SQLException e)
         {
@@ -200,9 +204,9 @@ public class HotelUtility {
 	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
             ResultSetMetaData rsMetaData = result.getMetaData();
-        System.out.format("%n%-25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4));
+        System.out.format("%n%-25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5));
             while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4));
+                System.out.format("%-25s%25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
         }
             }catch(SQLException e)
         {
@@ -224,6 +228,19 @@ public class HotelUtility {
   //Function to insert the room details
     //foreign key case is to be implemented 
     public void enterRoomInfo(Statement statement) {
+    	System.out.println("The hotel information");
+	    try {
+            ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
+            ResultSetMetaData rsMetaData = result.getMetaData();
+        System.out.format("%n%-25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5));
+            while (result.next()) {
+                System.out.format("%-25s%25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
+        }
+            }catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+
       	Scanner scan = new Scanner(System.in);
         System.out.println("Enter the  hotel id");
         int hid = scan.nextInt();
@@ -256,20 +273,22 @@ public class HotelUtility {
     	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Room");
 	    ResultSetMetaData rsMetaData = result.getMetaData();
-            System.out.format("%n%-25s%25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6));
+            System.out.format("%n%-20s%20s%20s%20s%20s%20s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6));
             while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6));
+                System.out.format("%-20s%20s%20s%20s%20s%20s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6));
             }
             }catch(SQLException e)
             {
               e.printStackTrace();
             }
 
-    	    System.out.println("Enter the hotel id and the room number which need to be updated");
+    	    System.out.println("Enter the hotel id  which need to be updated");
     	    int hid = scan.nextInt();
+    	    scan.nextLine(); 
+    	    System.out.println("Enter  room number which need to be updated");
     	    int rnumber = scan.nextInt();
             scan.nextLine(); 
-        System.out.println("Enter the category of the room to update");
+        System.out.println("Enter the category of the room to update(Economy/Presidential/Deluxe/Executive)");
         String rcategory = scan.nextLine();
         System.out.println("Enter the occupancy to update");
         int roccupancy = scan.nextInt();
@@ -299,9 +318,12 @@ public class HotelUtility {
             {
               e.printStackTrace();
             }
-	    System.out.println("Enter the hotel id and the room number which need to be deleted");
+	    System.out.println("Enter the hotel id  which need to be updated");
 	    int hid = scan.nextInt();
+	    scan.nextLine(); 
+	    System.out.println("Enter  room number which need to be updated");
 	    int rnumber = scan.nextInt();
+        scan.nextLine(); 
 	    try
         {
             ResultSet result1 = statement.executeQuery("DELETE FROM Room where hotelID = "+hid+" and roomNo = "+rnumber+"");
@@ -321,8 +343,11 @@ public class HotelUtility {
         scan.nextLine();
         System.out.println("Enter the job title of the staff member");
         String sjobtitle = scan.nextLine();
+        
         System.out.println("Enter the department of the staff");
         String sdept = scan.nextLine();
+        System.out.println("Enter the address of the staff member");
+        String saddr = scan.nextLine();
         System.out.println("Enter the phone number of the staff");
         BigInteger sphone = scan.nextBigInteger();
         scan.nextLine();
@@ -332,7 +357,7 @@ public class HotelUtility {
         {
             //*********************************************************************************************************
             connection.setAutoCommit(false);
-            int result = statement.executeUpdate("INSERT INTO Staff(name,age,jobTitle,dept,ph,hotelID)" +  "VALUES ('"+sname+"','"+sage+"', '"+sjobtitle+"','"+sdept+"','"+sphone+"','"+hid+"')");
+            int result = statement.executeUpdate("INSERT INTO Staff(name,age,jobTitle,dept,ph,hotelID, address)" +  "VALUES ('"+sname+"','"+sage+"', '"+sjobtitle+"','"+sdept+"','"+sphone+"','"+hid+"','"+saddr+"')");
             System.out.println("Staff information has been entered");
             int idFetched = statement.executeUpdate("SELECT staffID FROM Staff ORDER BY staffID desc LIMIT 1");
             int availability = 1;
@@ -375,9 +400,9 @@ public class HotelUtility {
 	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Staff");
             ResultSetMetaData rsMetaData = result.getMetaData();
-            System.out.format("%n%-25s%25s%25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7));
+            System.out.format("%n%-20s%20s%20s%20s%20s%20s%20s%20s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
             while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7));
+                System.out.format("%-20s%20s%20s%20s%20s%20s%20s%20s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
             }
             }catch(SQLException e)
             {
@@ -395,6 +420,8 @@ public class HotelUtility {
         String sjobtitle = scan.nextLine();
         System.out.println("Enter the department of the staff to update");
         String sdept = scan.nextLine();
+        System.out.println("Enter the address of the staff member");
+        String saddr = scan.nextLine();
         System.out.println("Enter the phone number of the staff to update");
         BigInteger sphone = scan.nextBigInteger();
         scan.nextLine();
@@ -403,7 +430,7 @@ public class HotelUtility {
         ResultSet result1;
         try
         {
-            result1 = statement.executeQuery("UPDATE Staff SET Name = '"+sname+"', age = '"+sage+"', jobTitle = '"+sjobtitle+"', dept = '"+sdept+"', ph = '"+sphone+"', hotelID = '"+hid+"' where staffID = "+sid+"");
+            result1 = statement.executeQuery("UPDATE Staff SET Name = '"+sname+"', age = '"+sage+"', jobTitle = '"+sjobtitle+"', dept = '"+sdept+"',address='"+saddr+"', ph = '"+sphone+"', hotelID = '"+hid+"' where staffID = "+sid+"");
         }catch(SQLException e)
         {
             e.printStackTrace();
@@ -416,9 +443,9 @@ public class HotelUtility {
 	    try{
 	    ResultSet result = statement.executeQuery("SELECT * FROM Staff");
             ResultSetMetaData rsMetaData = result.getMetaData();
-            System.out.format("%n%-25s%25s%25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7));
+            System.out.format("%n%-20s%20s%20s%20s%20s%20s%20s%20s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
             while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7));
+                System.out.format("%-20s%20s%20s%20s%20s%20s%20s%20s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
             }
             }catch(SQLException e)
             {
