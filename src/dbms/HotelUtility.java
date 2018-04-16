@@ -15,7 +15,7 @@ public class HotelUtility {
     public int getBillingID(Statement statement,String hotelID,String roomNo){
         Scanner scan = new Scanner(System.in);
         try{
-            ResultSet result = statement.executeQuery("select bID from BillingInfo WHERE hotelID="+hotelID+" AND roomNo="+roomNo+" AND endTime IS NULL");
+            ResultSet result = statement.executeQuery("select bID from BillingInfo WHERE hotelID="+hotelID+" AND roomNo="+roomNo+" AND endTime ='0000-00-00 00:00:00'");
             if(!result.isBeforeFirst())
             	return -1;
             if(result.next())
@@ -100,13 +100,28 @@ public class HotelUtility {
             System.out.println("Room is unoccupied!!");
             return;
         }
-        System.out.println("Billing ID"+bID);
+        //System.out.println("Billing ID"+bID);
+        String st=null;
+        try
+        {
+        	ResultSet res;
+            res = statement.executeQuery("select startTime from BillingInfo WHERE bID = "+bID+"");
+            if(res.next()){
+            st=res.getString(1);
+            //System.out.println("Start time:"+st);
+            }
+        }
+        catch(Exception e)
+        {
+        	e.printStackTrace();
+        }
+        
         System.out.println("Enter the end time in the format YYYY-MM-DD HH:MM:SS");
         String eTime = scan.nextLine();
         ResultSet result;
         try
         {
-	    result = statement.executeQuery("UPDATE BillingInfo SET endTime = '"+eTime+"' WHERE bID = "+bID+"");
+	    result = statement.executeQuery("UPDATE BillingInfo SET endTime = '"+eTime+"', startTime='"+st+"' WHERE bID = "+bID+"");
             result = statement.executeQuery("(SELECT \"Room Stay\" AS Item, (CEIL(TIMESTAMPDIFF("+
             "SECOND,BI.startTime,BI.endTime)/86400))*R.rate  as Amount FROM BillingInfo BI, Room R WHERE R.roomNo=BI.roomNo AND "+
             "R.hotelID=BI.hotelID AND BI.bID="+bID+") "+
@@ -131,12 +146,13 @@ public class HotelUtility {
 	           System.out.format("%-25s%16s%n",result.getString(1), result.getString(2));
             }
             result.previous();
-            result = statement.executeQuery("UPDATE BillingInfo SET amount="+result.getString(2)+" WHERE bID="+bID);
+            result = statement.executeQuery("UPDATE BillingInfo SET endTime = '"+eTime+"', startTime='"+st+"', amount="+result.getString(2)+" WHERE bID="+bID);
         }
         catch(SQLException e)
         {
             e.printStackTrace();
         }
+        
 
     }
 
@@ -261,6 +277,10 @@ public class HotelUtility {
         try
         {
             ResultSet result = statement.executeQuery("INSERT INTO Room(HotelID,roomNo,category,occupancy,rate,availability)" +  "VALUES ('"+hid+"','"+rno+"', '"+rcategory+"','"+roccupancy+"','"+rrate+"','"+available+"')");
+            if(rcategory.equals("Presidential"))
+            {
+            	ResultSet resultPres = statement.executeQuery("INSERT INTO PresidentialSuite(roomNo,hotelID) VALUES ("+rno+","+hid+")");
+            }
             System.out.println("Room information has been entered");
         }catch(SQLException e)
         {
@@ -797,9 +817,10 @@ public class HotelUtility {
     //Function to release rooms 
     public void releaseRoom(Statement statement) throws SQLException {
       	Scanner scan = new Scanner(System.in);
+      	int avail=0;
 		System.out.println("The Room information");
   	    try {
-            ResultSet resultHotel = statement.executeQuery("SELECT hotelID, roomNo FROM Room where availability=0");
+            ResultSet resultHotel = statement.executeQuery("SELECT hotelID, roomNo FROM Room where availability="+avail);
             ResultSetMetaData rsMetaData = resultHotel.getMetaData();
             if(!resultHotel.isBeforeFirst())
             {
