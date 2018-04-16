@@ -25,7 +25,7 @@ CREATE TABLE Hotel (
 hotelID INT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(50) NOT NULL,
 address VARCHAR(150) NOT NULL,
-phoneNumber BIGINT NOT NULL,
+phoneNumber BIGINT NOT NULL UNIQUE,
 city VARCHAR(25) NOT NULL
 );
 
@@ -48,7 +48,7 @@ name VARCHAR(30) NOT NULL,
 age INT NOT NULL,
 jobTitle VARCHAR(30) NOT NULL,
 dept VARCHAR(30) NOT NULL,
-ph BIGINT NOT NULL,
+ph BIGINT NOT NULL UNIQUE,
 hotelID INT NOT NULL,	
 address VARCHAR(150) NOT NULL,
 CONSTRAINT staff_hotel_fk FOREIGN KEY(hotelID) REFERENCES Hotel(hotelID) ON DELETE CASCADE
@@ -196,9 +196,9 @@ INSERT INTO Customer(name, dob, phone, email) VALUES ('Lucy', '1985-01-30', 213,
 
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Mary', 40, 'Manager', 'Management', 654, 0001, '90 ABC St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('John', 45, 'Manager', 'Management', 564, 0002, '798 XYZ St , Rochester NY 54');
-INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Carol', 55, 'Manager', 'Management', 546, 0003, '351 MH St , Greensboro NC 27');	
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Carol', 55, 'Manager', 'Management', 566, 0003, '351 MH St , Greensboro NC 27');	
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Emma', 55, 'Front Desk Staff', 'Management', 546, 0001, '49 ABC St , Raleigh NC 27');	
-INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Ava', 55, 'Catering Staff', 'Catering', 777, 0001, '425 RG St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Ava', 55, 'Catering Staff', 'Catering', 7771, 0001, '425 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Peter', 52, 'Manager', 'Management', 724, 0004, '475 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Olivia', 27, 'Front Desk Staff', 'Management', 799, 0004, '325 PD St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Jane', 27, 'Front Desk Staff', 'Management', 798, 0002, '329 PD St , Raleigh NC 27');
@@ -220,7 +220,7 @@ INSERT INTO Services(serviceID, name) VALUES (2, 'Dry cleaning');
 INSERT INTO Services(serviceID, name) VALUES (3, 'Gyms');
 INSERT INTO Services(serviceID, name) VALUES (4, 'Room Service');
 INSERT INTO Services(serviceID, name) VALUES (5, 'Special Request');
-
+INSERT INTO Services(serviceID, name) VALUES (6, 'Catering');
 
 INSERT INTO Manager(staffID, hotelID) VALUES (100, 0001);
 INSERT INTO Manager(staffID, hotelID) VALUES (101, 0002);
@@ -245,6 +245,8 @@ INSERT INTO FrontDeskStaff(staffID) VALUES (103);
 INSERT INTO FrontDeskStaff(staffID) VALUES (107);
 INSERT INTO FrontDeskStaff(staffID) VALUES (108);
 /* No customer for Presidential Suite 			INSERT INTO PresidentialSuite(RoomServiceStaffID,CateringServiceStaffID,roomNo,hotelID) VALUES(7,10,401,1); */
+
+INSERT INTO PresidentialSuite(hotelID, roomNo) VALUES (4, 1);
 
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (5939846, '980 TRT St , Raleigh NC');
 INSERT INTO PaymentInfo_payment(paymentID, ssn, paymentType) VALUES (1, 5939846, 'card');
@@ -282,24 +284,30 @@ INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 1, 05);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 05);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 1, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 1, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 1, 05);
 
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 2, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 2, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 2, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 2, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 2, 03);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 2, 03);
 
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 3, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 3, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 3, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 3, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 3, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 3, 02);
 
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 4, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 4, 01);
 
 
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
