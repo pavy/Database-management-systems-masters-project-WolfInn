@@ -13,6 +13,7 @@ public class HotelUtility {
         this.connection = connection;
     }
     public int getBillingID(Statement statement,String hotelID,String roomNo){
+    	/* This API returns the billing id by taking hotel id and room number as the parameters. */
         Scanner scan = new Scanner(System.in);
         try{
             ResultSet result = statement.executeQuery("select bID from BillingInfo WHERE hotelID="+hotelID+" AND roomNo="+roomNo+" AND endTime ='0000-00-00 00:00:00'");
@@ -30,6 +31,7 @@ public class HotelUtility {
 
 	public void maintainServiceRecord(Statement statement)
     {
+		/*This API is used to enter or update service records for services such as phone bills, dry cleaning, gyms, room service, and special requests. */
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter your ID(Staff ID): ");
         String staffID = scan.nextLine();
@@ -90,6 +92,11 @@ public class HotelUtility {
 
 	public void maintainBillingAccount(Statement statement)
     {
+		/*
+		 * This API maintains or generates the billing account for each customer stay. 
+		 * When generating the bills, 5 percent discount is applied if the card is of type ‘hotel card’. 
+		 * At the time of check out  the total amount owed by the customer is generated.
+		 */
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter Hotel ID: ");
         String hotelID = scan.nextLine();
@@ -158,6 +165,7 @@ public class HotelUtility {
     }
 
 	public void enterHotelInfo(Statement statement) {
+		/* This API is used to enter the hotel information. */
 	    Scanner scan = new Scanner(System.in);
     System.out.println("Enter name of the hotel");
     String hname = scan.nextLine();
@@ -180,6 +188,7 @@ public class HotelUtility {
 	
 	 //Function to update the hotel details    
     public void updateHotelInfo(Statement statement) {
+    	/* This API is used to update the hotel information based on the entered hotel id. */
     		Scanner scan = new Scanner(System.in);
     	    System.out.println("The hotel information");
     	    try {
@@ -218,6 +227,7 @@ public class HotelUtility {
     
   //Function to delete the hotel details
     public void deleteHotel(Statement statement) throws SQLException {
+    	/*This API is used to delete the hotel information based on the entered hotel id. */
     	    Scanner scan = new Scanner(System.in);
 	    System.out.println("The hotel information");
 	    try {
@@ -247,6 +257,7 @@ public class HotelUtility {
   //Function to insert the room details
     //foreign key case is to be implemented 
     public void enterRoomInfo(Statement statement) {
+    	/* This API is used to enter the room information. */
     	System.out.println("The hotel information");
 	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
@@ -306,6 +317,7 @@ public class HotelUtility {
     
   //Function to update the room details
     public void updatedRoomInfo(Statement statement) throws SQLException {
+    	/*This API is used to update the room information based on hotel id and room number. */
     	    Scanner scan = new Scanner(System.in);
     	    System.out.println("The room information");
     	    try {
@@ -343,6 +355,7 @@ public class HotelUtility {
     }
     //Function to delete the room details
     public void deleteRoom(Statement statement) throws SQLException {
+    	/* This API is used to delete the room information based on hotel id and room number.*/
        	Scanner scan = new Scanner(System.in);
 	    System.out.println("The room information");
 	    try {
@@ -373,6 +386,7 @@ public class HotelUtility {
     }
   //Function to enter the staff details
     public void enterStaffInfo(Statement statement) {
+    	/* This API is used to enter the staff information. */
       	Scanner scan = new Scanner(System.in);
         System.out.println("Enter the  name of the staff");
         String sname = scan.nextLine();
@@ -437,6 +451,7 @@ public class HotelUtility {
     }
     //Function to update the staff details
     public void updateStaffInfo(Statement statement) throws SQLException {
+    	/* This API is used to update the staff information based on staff id. */
       	Scanner scan = new Scanner(System.in);
       	System.out.println("The staff information");
 	    try {
@@ -477,6 +492,9 @@ public class HotelUtility {
     }
    //Function to delete the staff details
     public void deleteStaff(Statement statement) throws SQLException {
+    	/* This API is used to delete the staff information based on staff id. 
+    	 * The rows in the corresponding relations FrontDeskStaff, RoomServiceStaff and CateringServiceStaff have been deleted.
+    	  */
       	Scanner scan = new Scanner(System.in);
 	    System.out.println("The Staff information");
 	    try{
@@ -506,6 +524,7 @@ public class HotelUtility {
     }
     //Function to insert the customer details
     public void enterCustomerInfo(Statement statement) {
+    	/* This API is used to enter the customer information. */
       	Scanner scan = new Scanner(System.in);
         System.out.println("Enter the name of the customer");
         String cname = scan.nextLine();
@@ -527,6 +546,7 @@ public class HotelUtility {
     }
     //Function to update the customer details
     public void updateCustomerInfo(Statement statement) throws SQLException {
+    	/* This API is used to update the customer information based on customer id. */
       	Scanner scan = new Scanner(System.in);
 	    System.out.println("The customer information");
 	    try {
@@ -563,6 +583,7 @@ public class HotelUtility {
     }
     //Function to delete the customer details
     public void deleteCustomer(Statement statement) throws SQLException {
+    	/* This API is used to delete the customer information based on customer id. */
       	Scanner scan = new Scanner(System.in);
 	    System.out.println("The customer information");
 	    try {
@@ -589,6 +610,7 @@ public class HotelUtility {
     }
     //Function to check room availability by hotel and room type
     public void roomAvailabilityByHotelAndRoomtype(Statement statement) throws SQLException {
+    	/* This API is used to check the availability of the room based on  hotel id and type of the room. */
       	Scanner scan = new Scanner(System.in);
       	System.out.println("The hotel information");
         try {
@@ -626,6 +648,7 @@ public class HotelUtility {
     }
     //Function to check room availability by hotel and room number
     public void roomAvailabilityByHotelAndRoomno(Statement statement) throws SQLException {
+    	/* This API is used to check the availability of the room based on hotel id and room number. */
     		Scanner scan = new Scanner(System.in);
     		System.out.println("The hotel information");
       	    try {
@@ -651,6 +674,14 @@ public class HotelUtility {
     }
     //Function to assign rooms to customers accroding to the request and availability
     public void assignRoom(Statement statement) throws SQLException {
+    	/*
+    	 * This API is used to assign room to the customer.
+    	 *  The user is asked to enter the information. 
+    	 *  If the payment type is card then the user is asked to enter the card details and the card information is stored. 
+    	 *  The room availability is checked. If the room is available then the billing information is updated. 
+    	 *  The relations PresidentialSuite, RoomServiceStaff and CateringServiceStaff are updated if the room category  Presidential Suite.
+    	 *   The transaction is implemented in this API.
+    	 */
       	Scanner scan = new Scanner(System.in);
   	    System.out.println("The Customer information");
 	    try {
@@ -797,7 +828,7 @@ public class HotelUtility {
             if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
-           System.out.println("Information not processed. Please check your values");
+           System.out.println("Information not processed. Incorrect values for PR Suite");
            return;
             } 
             if(category.equals("Presidential")){
@@ -805,21 +836,21 @@ public class HotelUtility {
             if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
-           System.out.println("Information not processed. Please check your values");
+           System.out.println("Information not processed. PR Suite update failed!");
            return;
             } 
             result = statement.executeUpdate("UPDATE RoomServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+rsid+"");
             if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
-           System.out.println("Information not processed. Please check your values");
+           System.out.println("Information not processed. RoomService Staff update failed");
            return;
             } 
             result = statement.executeUpdate("UPDATE CateringServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+csid+"");
            if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
-           System.out.println("Information not processed. Please check your values");
+           System.out.println("Information not processed. Catering Staff Update failed");
            return;
            }  
            }
@@ -834,7 +865,7 @@ public class HotelUtility {
                try{
                   connection.rollback();
                   connection.setAutoCommit(true);
-                  System.out.println("Information not processed. Please check your values");
+                  System.out.println("Information not processed. Please check all your input values");
                }catch(SQLException ex){
                   ex.printStackTrace();
                }
@@ -842,6 +873,12 @@ public class HotelUtility {
     }
     //Function to release rooms 
     public void releaseRoom(Statement statement) throws SQLException {
+    	/*
+    	 * This API is used to release room by updating the availability of the room based on hotel id and room number. 
+    	 * The relations PresidentialSuite, RoomServiceStaff and CateringServiceStaff are updated by making the staff 
+    	 * available that was assigned to Presidential room.
+
+    	 */
       	Scanner scan = new Scanner(System.in);
       	int avail=0;
 		System.out.println("The Room information");
@@ -946,7 +983,9 @@ public class HotelUtility {
 
 	public void reportOccupancyByRoomType(Statement statement) {
 		try {
-			
+			/*
+			 * Query to generate report for percentage of rooms occupied for each type od rooms in every hotel present in the database
+			 */
 			/*
 			 * SELECT  Total_Rooms.hotelID, Total_Rooms.category AS 'Room Category', Total_Rooms.Rooms as 'Total Rooms', 
 			 * IFNULL (Occupied_Rooms.Occupied,0) AS 'Rooms Occupied', IFNULL (( Occupied_Rooms.Occupied/Total_Rooms.Rooms)*100,0) AS 
@@ -990,9 +1029,9 @@ public class HotelUtility {
 			 * Query to generate report for percentage of rooms occupied within a date range 
 			 */
 			Scanner sc = new Scanner(System.in);
-			System.out.println("Enter start date");
+			System.out.println("Enter start date(yyyy-MM-dd):");
 			String st = sc.nextLine();
-			System.out.println("Enter end date");
+			System.out.println("Enter end date(yyyy-MM-dd):");
 			String et = sc.nextLine();
 			ResultSet result = statement
 					.executeQuery("SELECT A.Rooms, B.Occupied, IFNULL ((B.Occupied/A.Rooms)*100,0) AS 'Percentage Occupied'"
@@ -1013,11 +1052,11 @@ public class HotelUtility {
 							+ "'))) as B ");
 
 			ResultSetMetaData rsMetaData = result.getMetaData();
-			System.out.format("%n%-25s%16s%16s%n%n",
+			System.out.format("%n%-25s%16s%26s%n%n",
 					rsMetaData.getColumnName(1), rsMetaData.getColumnName(2),
 					rsMetaData.getColumnName(3));
 			while (result.next()) {
-				System.out.format("%-25s%16s%20s%n", result.getString(1),
+				System.out.format("%-25s%16s%26s%n", result.getString(1),
 						result.getString(2), result.getString(3));
 			}
 
@@ -1046,10 +1085,10 @@ FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city
 			"IFNULL (SUM(CASE WHEN availability=0 THEN 1 ELSE 0 END)/COUNT(*)*100,0) AS 'Percentage Occupied'"+
 							"FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city");
 			ResultSetMetaData rsMetaData = result.getMetaData();
-			System.out.format("%n%-25s%16s%16s%n%n", rsMetaData.getColumnName(1),
+			System.out.format("%n%-25s%16s%26s%n%n", rsMetaData.getColumnName(1),
 					rsMetaData.getColumnName(2), rsMetaData.getColumnName(3));
 			while (result.next()) {
-				System.out.format("%-25s%16s%16s%n", result.getString(1),
+				System.out.format("%-25s%16s%26s%n", result.getString(1),
 						result.getString(2), result.getString(3));
 			}
 		} catch (Exception e) {
@@ -1059,6 +1098,9 @@ FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city
 	}
 
 	private void showCityList(Statement statement) {
+		/*
+		 * Helper function to showList of cities for execting APIs
+		 */
 		try
 		{
 			System.out.println("Hotels are present in the following cities:\n Please enter a city name from the list to view results:\n");
@@ -1084,12 +1126,12 @@ FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city
 			ResultSet result = statement
 					.executeQuery("select * from Staff  ORDER BY Staff.dept");
 			ResultSetMetaData rsMetaData = result.getMetaData();
-			System.out.format("%n%-25s%16s%16s%16s%16s%16s%n%n", rsMetaData.getColumnName(1),
+			System.out.format("%n%-15s%20s%16s%26s%20s%16s%n%n", rsMetaData.getColumnName(1),
 					rsMetaData.getColumnName(2), rsMetaData.getColumnName(3),
 					rsMetaData.getColumnName(4), rsMetaData.getColumnName(5),
 					rsMetaData.getColumnName(6));
 			while (result.next()) {
-				System.out.format("%-25s%16s%16s%16s%16s%16s%n", result.getString(1),
+				System.out.format("%-15s%20s%16s%26s%20s%16s%n", result.getString(1),
 						result.getString(2), result.getString(3),
 						result.getString(4), result.getString(5),
 						result.getString(6));
@@ -1145,6 +1187,9 @@ FROM Hotel,Room  where Hotel.hotelID=Room.hotelID group by city
 
 	private void showAllCustomers(Statement statement) {
 		// TODO Auto-generated method stub
+		/*
+		 * Function to show all customers
+		 */
 		try
 		{
 			ResultSet result = statement
