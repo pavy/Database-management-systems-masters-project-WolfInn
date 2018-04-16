@@ -756,7 +756,7 @@ public class HotelUtility {
 
             ResultSet cvalid = statement.executeQuery("SELECT cardNo,type FROM Card_details where cardNo = '"+cno+"'");
             if(!cvalid.next()){
-                System.out.println("Enter the card type (hotel_card/VISA/MASTER)");
+                System.out.println("Enter the card type (hotel card/VISA/MASTER)");
                 ctype = scan.nextLine();
                 System.out.println("Enter the payer name");
                 String pname = scan.nextLine();
