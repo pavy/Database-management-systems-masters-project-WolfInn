@@ -28,10 +28,10 @@ Add additional notes about how to deploy this on a live system
 
 ## Contributors
 
-Arpita Shekhar
-Amulya Varote
-Pavithra Iyer
-Saraswati Mishra
+* Arpita Shekhar
+* Amulya Varote
+* Pavithra Iyer
+* Saraswati Mishra
 
 ## License
 
