@@ -77,11 +77,12 @@ public class HotelUtility {
             {
                 statement.executeUpdate("INSERT INTO Provides(staffID, serviceID, bID, qty) VALUES (" + staffID +", " + serviceID +", "+bID+", "+ qty +")" );
             }
+            System.out.println("Service updated successfully!");
 
         }
         catch(SQLException e)
         {
-            e.printStackTrace();
+        	System.out.println("Error in updating service!");
         }
 
     }
