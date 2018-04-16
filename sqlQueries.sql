@@ -307,7 +307,7 @@ INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 4, 01);
-INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 3, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 4, 01);
 
 
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
