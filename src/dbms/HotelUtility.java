@@ -766,8 +766,18 @@ public class HotelUtility {
                csid = scan.nextInt();
                scan.nextLine();
              }            
+            int qtyService=1,rsService=4,csService=6;
             result = statement.executeUpdate("INSERT INTO BillingInfo(paymentID,startTime,guestCount,customerID,hotelID,staffID,roomNo)" +  "VALUES ('"+pid+"','"+sTime+"','"+gcount+"','"+cid+"','"+hid+"','"+sid+"','"+rno+"')");
             result = statement.executeUpdate("UPDATE Room SET availability = "+notAvailable+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
+            if(category.equals("Presidential")){
+            int idFetched=0;
+            ResultSet result1 = statement.executeQuery("SELECT bID FROM BillingInfo ORDER BY bID desc LIMIT 1");
+            if(result1.next()){
+            	idFetched = result1.getInt(1);
+            }
+            result = statement.executeUpdate("INSERT INTO Provides(qty,staffID,serviceID,bID) VALUES("+qtyService+","+rsid+","+rsService+","+idFetched+")");
+            result = statement.executeUpdate("INSERT INTO Provides(qty,staffID,serviceID,bID) VALUES("+qtyService+","+csid+","+csService+","+idFetched+")");
+            }
             if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
