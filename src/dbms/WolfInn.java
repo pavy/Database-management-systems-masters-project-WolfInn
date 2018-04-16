@@ -55,11 +55,11 @@ public class WolfInn {
     		System.out.println("1 - Report occupancy by hotel");
     		System.out.println("2 - Report occupancy by room type");
     		System.out.println("3 - Report occupancy by date range");
-    		System.out.println("4 - Report occupancy by date City");
+    		System.out.println("4 - Report occupancy by City");
     		System.out.println("5 - Report of staff information group by role");
     		System.out.println("6 - Information on all staff members serving the customer during the stay");
     		System.out.println("7 - Revenue earned by a hotel during a given date range");
-//    		System.out.println("8 - Return to main menu");
+    		System.out.println("8 - Return to main menu");
     		HotelUtility obj = new HotelUtility(connection);
     		Scanner scan = new Scanner(System.in);
     		int choice = scan.nextInt();
@@ -91,6 +91,7 @@ public class WolfInn {
     		case 7:
     			obj.reportRevenueEarnedInDateRange(statement);
     			break;
+    		case 8: return;
     		default:
     			System.out.println("Not a valid choice");
     			break;
@@ -139,6 +140,7 @@ public class WolfInn {
             System.out.println("14 - Check Availability of room by Hotel and Room Number");
             System.out.println("15 - Assign room to customer");
             System.out.println("16 - Release room");
+            System.out.println("17 - Return to main menu");
             
             int choice = scan.nextInt();
             
@@ -175,6 +177,7 @@ public class WolfInn {
             		            break;
             		case 16:obj.releaseRoom(statement);
             		            break;
+            		case 17: return;
             		default : System.out.println("Please select a valid task");
             					break;
             }
