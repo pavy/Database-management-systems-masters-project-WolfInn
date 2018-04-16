@@ -184,9 +184,9 @@ public class HotelUtility {
     	    try {
     	    ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
     	    ResultSetMetaData rsMetaData = result.getMetaData();
-        System.out.format("%n%-25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5));
+        System.out.format("%n%-25s%25s%35s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5));
 	    while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
+                System.out.format("%-25s%25s%35s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
         }
     	    }catch(SQLException e)
         {
@@ -250,9 +250,9 @@ public class HotelUtility {
 	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Hotel");
             ResultSetMetaData rsMetaData = result.getMetaData();
-        System.out.format("%n%-25s%25s%25s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5));
+        System.out.format("%n%-25s%25s%35s%25s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5));
             while (result.next()) {
-                System.out.format("%-25s%25s%25s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
+                System.out.format("%-25s%25s%35s%25s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
         }
             }catch(SQLException e)
         {

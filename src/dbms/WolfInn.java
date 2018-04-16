@@ -6,13 +6,13 @@ import java.util.Scanner;
 public class WolfInn {
 
 	// Update user info
-	private static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/piyer3"; // Using
+	private static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/avarote"; // Using
 																		// SERVICE_NAME
 
 	// Update your user and password info here!
 
-	private static final String user = "piyer3";
-	private static final String password = "Pavi_DBMS540";
+	private static final String user = "avarote";
+	private static final String password = "200203589";
 
 	public static void main(String[] args) {
 		try {
