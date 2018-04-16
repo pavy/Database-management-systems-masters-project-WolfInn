@@ -666,22 +666,30 @@ public class HotelUtility {
         String ptype = scan.nextLine();
         int result;
         String ctype = "";
-	String cno = "";
+	    String cno = "";
         //**************************************************************************************************************************
         connection.setAutoCommit(false);
         if(ptype.equals("card")){
-            System.out.println("Enter the card type (hotel_card/VISA/MASTER)");
-            ctype = scan.nextLine();
             System.out.println("Enter card number");
             cno = scan.nextLine();
-            System.out.println("Enter the payer name");
-            String pname = scan.nextLine();
-            System.out.println("Enter expiry date of the card");
-            String expiryDate = scan.nextLine();
-            System.out.println("Enter card cvv");
-            int cvv  = scan.nextInt();
-            scan.nextLine();
-            result = statement.executeUpdate("INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv)" + "VALUES ('"+cno+"', '"+pname+"', '"+ctype+"', '"+expiryDate+"', '"+cvv+"')");
+
+            ResultSet cvalid = statement.executeQuery("SELECT cardNo,type FROM Card_details where cardNo = '"+cno+"'");
+            if(!cvalid.next()){
+                System.out.println("Enter the card type (hotel_card/VISA/MASTER)");
+                ctype = scan.nextLine();
+                System.out.println("Enter the payer name");
+                String pname = scan.nextLine();
+                System.out.println("Enter expiry date of the card");
+                String expiryDate = scan.nextLine();
+                System.out.println("Enter card cvv");
+                int cvv  = scan.nextInt();
+                scan.nextLine();
+                result = statement.executeUpdate("INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv)" + "VALUES ('"+cno+"', '"+pname+"', '"+ctype+"', '"+expiryDate+"', '"+cvv+"')");
+
+            }
+            else{
+                ctype=cvalid.getString(2);
+            }
         }
         System.out.println("Enter the payer ssn");
         int pssn = scan.nextInt();
@@ -689,13 +697,16 @@ public class HotelUtility {
         int pid=0;
         System.out.println("Enter the billing address");
         String paddress = scan.nextLine();
-        
-        result = statement.executeUpdate("INSERT INTO PaymentInfo_payer(ssn, address)" + "VALUES ('"+pssn+"', '"+paddress+"')");
+        try{
+            result = statement.executeUpdate("INSERT INTO PaymentInfo_payer(ssn, address)" + "VALUES ('"+pssn+"', '"+paddress+"')");
+        }catch(SQLException e1){
+
+        }
         result = statement.executeUpdate("INSERT INTO PaymentInfo_payment(ssn, paymentType) VALUES ('"+pssn+"', '"+ptype+"')");
         ResultSet presult = statement.executeQuery("SELECT paymentID FROM PaymentInfo_payment ORDER BY paymentID DESC LIMIT 1");
-          if (presult.next()) {
+        if (presult.next()) {
           pid = presult.getInt(1);
-          }
+        }
         if(ptype.equals("card")){
           result = statement.executeUpdate("INSERT INTO Card_payment(paymentID, type, cardNo)" + "VALUES ('"+pid+"', '"+ctype+"', '"+cno+"')");
         } 
