@@ -198,7 +198,7 @@ INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Mary
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('John', 45, 'Manager', 'Management', 564, 0002, '798 XYZ St , Rochester NY 54');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Carol', 55, 'Manager', 'Management', 566, 0003, '351 MH St , Greensboro NC 27');	
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Emma', 55, 'Front Desk Staff', 'Management', 546, 0001, '49 ABC St , Raleigh NC 27');	
-INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Ava', 55, 'Catering Staff', 'Catering', 777, 0001, '425 RG St , Raleigh NC 27');
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Ava', 55, 'Catering Staff', 'Catering', 7771, 0001, '425 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Peter', 52, 'Manager', 'Management', 724, 0004, '475 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Olivia', 27, 'Front Desk Staff', 'Management', 799, 0004, '325 PD St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Jane', 27, 'Front Desk Staff', 'Management', 798, 0002, '329 PD St , Raleigh NC 27');
