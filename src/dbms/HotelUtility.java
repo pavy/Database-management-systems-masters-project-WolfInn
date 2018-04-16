@@ -326,15 +326,15 @@ public class HotelUtility {
     	    System.out.println("Enter  room number which need to be updated");
     	    int rnumber = scan.nextInt();
             scan.nextLine(); 
-        System.out.println("Enter the category of the room to update(Economy/Presidential/Deluxe/Executive)");
-        String rcategory = scan.nextLine();
+        /*System.out.println("Enter the category of the room to update(Economy/Presidential/Deluxe/Executive)");
+        String rcategory = scan.nextLine();*/
         System.out.println("Enter the occupancy to update");
         int roccupancy = scan.nextInt();
         System.out.println("Enter the rate of the room to update");
         float rrate = scan.nextFloat();
         try
         {
-            ResultSet result1 = statement.executeQuery("UPDATE Room SET category = '"+rcategory+"', occupancy = '"+roccupancy+"', rate = '"+rrate+"' where hotelID = "+hid+" and roomNo = "+rnumber+"");
+            ResultSet result1 = statement.executeQuery("UPDATE Room SET  occupancy = '"+roccupancy+"', rate = '"+rrate+"' where hotelID = "+hid+" and roomNo = "+rnumber+"");
             System.out.println("Room information has been updated");
         }catch(SQLException e)
         {
