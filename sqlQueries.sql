@@ -246,6 +246,8 @@ INSERT INTO FrontDeskStaff(staffID) VALUES (107);
 INSERT INTO FrontDeskStaff(staffID) VALUES (108);
 /* No customer for Presidential Suite 			INSERT INTO PresidentialSuite(RoomServiceStaffID,CateringServiceStaffID,roomNo,hotelID) VALUES(7,10,401,1); */
 
+INSERT INTO PresidentialSuite(hotelID, roomNo) VALUES (4, 1);
+
 INSERT INTO PaymentInfo_payer(ssn, address) VALUES (5939846, '980 TRT St , Raleigh NC');
 INSERT INTO PaymentInfo_payment(paymentID, ssn, paymentType) VALUES (1, 5939846, 'card');
 INSERT INTO Card_details(cardNo, name, type, expiryDate, cvv) VALUES ('1052', 'David', 'VISA', '2022-01-15', 212);
