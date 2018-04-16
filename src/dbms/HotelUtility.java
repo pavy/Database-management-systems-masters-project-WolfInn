@@ -282,7 +282,7 @@ public class HotelUtility {
             {
             	ResultSet resultPres = statement.executeQuery("INSERT INTO PresidentialSuite(roomNo,hotelID) VALUES ("+rno+","+hid+")");
             }
-            System.out.println("Room information has been entered");
+            //System.out.println("Room information has been entered");
         }catch(SQLException e)
         {
             e.printStackTrace();
