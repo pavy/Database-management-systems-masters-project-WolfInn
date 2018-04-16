@@ -2,12 +2,17 @@
 
 Wolf Inns is a popular hotel chain, with hotels in various cities across the country. The system will be used by the management of Wolf Inns, and maintains the information on the following: 
 
-Hotel information - hotel ID, hotel name, hotel address, hotel phone number, ID of the hotel manager; 
-Customer information - customer name, date of birth, contact information (phone number and email address); 
-Staff information - staff ID, name, age, job title (Manager, Front Desk Representative, Room Service Staff, Billing Staff, Catering Staff, etc), department, contact information (phone number and address), hotel currently serving; 
-Room information - room number, room category (Economy, Deluxe, Executive Suite, Presidential Suite, etc), max allowed occupancy, nightly rate, availability; 
-Billing information - customer ID, SSN of the person responsible for the payment, billing address, payment information (payment method, card number, etc); 
-Check-in information - customer name and date of birth, hotel ID, room number, number of guests, start date, end date, check-in time, check-out time, services offered.
+Hotel information - hotel ID, hotel name, hotel address, hotel phone number, ID of the hotel manager
+
+Customer information - customer name, date of birth, contact information (phone number and email address)
+
+Staff information - staff ID, name, age, job title (Manager, Front Desk Representative, Room Service Staff, Billing Staff, Catering Staff, etc), department, contact information (phone number and address), hotel currently serving
+
+Room information - room number, room category (Economy, Deluxe, Executive Suite, Presidential Suite, etc), max allowed occupancy, nightly rate, availability
+
+Billing information - customer ID, SSN of the person responsible for the payment, billing address, payment information (payment method, card number, etc)
+
+Check-in information - customer name and date of birth, hotel ID, room number, number of guests, start date, end date, check-in time, check-out time, services offered
 
 ## Getting Started
 
