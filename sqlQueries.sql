@@ -220,7 +220,7 @@ INSERT INTO Services(serviceID, name) VALUES (2, 'Dry cleaning');
 INSERT INTO Services(serviceID, name) VALUES (3, 'Gyms');
 INSERT INTO Services(serviceID, name) VALUES (4, 'Room Service');
 INSERT INTO Services(serviceID, name) VALUES (5, 'Special Request');
-
+INSERT INTO Services(serviceID, name) VALUES (6, 'Catering');
 
 INSERT INTO Manager(staffID, hotelID) VALUES (100, 0001);
 INSERT INTO Manager(staffID, hotelID) VALUES (101, 0002);
