@@ -196,7 +196,7 @@ INSERT INTO Customer(name, dob, phone, email) VALUES ('Lucy', '1985-01-30', 213,
 
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Mary', 40, 'Manager', 'Management', 654, 0001, '90 ABC St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('John', 45, 'Manager', 'Management', 564, 0002, '798 XYZ St , Rochester NY 54');
-INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Carol', 55, 'Manager', 'Management', 546, 0003, '351 MH St , Greensboro NC 27');	
+INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Carol', 55, 'Manager', 'Management', 566, 0003, '351 MH St , Greensboro NC 27');	
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Emma', 55, 'Front Desk Staff', 'Management', 546, 0001, '49 ABC St , Raleigh NC 27');	
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Ava', 55, 'Catering Staff', 'Catering', 777, 0001, '425 RG St , Raleigh NC 27');
 INSERT INTO Staff(name, age, jobTitle, dept, ph, hotelID, address) VALUES ('Peter', 52, 'Manager', 'Management', 724, 0004, '475 RG St , Raleigh NC 27');
