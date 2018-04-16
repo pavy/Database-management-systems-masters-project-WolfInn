@@ -286,6 +286,21 @@ public class HotelUtility {
         {
             e.printStackTrace();
         }
+        //Enter into Offers table
+        try
+        {
+        	int[] services={1,2,3,4,5,6};
+        	int[] prices={5,16,15,10,20,0};
+        	for(int i=0;i<services.length;i++)
+        	{
+        		ResultSet result = statement.executeQuery("INSERT INTO Offers(hotelID, roomNo,serviceID, price)" +  "VALUES ("+hid+","+rno+","+services[i]+","+prices[i]+")");
+        	}
+            
+            System.out.println("Room information has been entered");
+        }catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
     
   //Function to update the room details
