@@ -284,24 +284,30 @@ INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 1, 05);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 1, 05);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 1, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 1, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 1, 05);
 
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 2, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 2, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 2, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 2, 03);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 2, 03);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 2, 03);
 
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 3, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 3, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 3, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 3, 02);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 3, 02);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 3, 02);
 
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (1, 5, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (2, 16, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (3, 15, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (4, 10, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 4, 01);
+INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 3, 01);
 
 
 INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
