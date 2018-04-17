@@ -310,14 +310,14 @@ INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (5, 20, 4, 01);
 INSERT INTO Offers(serviceID, price, hotelID, roomNo) VALUES (6, 0, 4, 01);
 
 
-INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID, amount) VALUES 
-(1001, 0001, 01, 1, '2017-05-10 15:17:00', '2017-05-13 10:22:00', 0, 1, 103, 331.00);
-INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID, amount) VALUES 
-(1002, 0001, 02, 2, '2017-05-10 16:11:00', '2017-05-13 09:27:00', 0, 2, 103, 584.25);
-INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
-(1003, 0002, 03, 1, '2016-05-10 15:45:00', '2016-05-14 11:10:00', 0, 3, 107, 410.00);
-INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, amount, paymentID, staffID) VALUES 
-(1004, 0003, 02, 2, '2018-05-10 14:30:00', '2018-05-12 10:00:00', 0, 4, 108, 10030.00);
+INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, paymentID, staffID, amount) VALUES 
+(1001, 0001, 01, 1, '2017-05-10 15:17:00', '2017-05-13 10:22:00', 1, 103, 331.00);
+INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, paymentID, staffID, amount) VALUES 
+(1002, 0001, 02, 2, '2017-05-10 16:11:00', '2017-05-13 09:27:00', 2, 103, 584.25);
+INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, paymentID, staffID, amount) VALUES 
+(1003, 0002, 03, 1, '2016-05-10 15:45:00', '2016-05-14 11:10:00', 3, 107, 410.00);
+INSERT INTO BillingInfo(customerID, hotelID, roomNo, guestCount, startTime, endTime, paymentID, staffID, amount) VALUES 
+(1004, 0003, 02, 2, '2018-05-10 14:30:00', '2018-05-12 10:00:00', 4, 108, 10030.00);
 
 
 /* Billing info - custID, ssn, billadd, paymentmethod, cardno*/
