@@ -408,7 +408,8 @@ public class HotelUtility {
         try
         {
             //*********************************************************************************************************
-            connection.setAutoCommit(false);
+            // transaction 1 begins, setting auto commit to false
+	    connection.setAutoCommit(false);
             int result = statement.executeUpdate("INSERT INTO Staff(name,age,jobTitle,dept,ph,hotelID, address)" +  "VALUES ('"+sname+"','"+sage+"', '"+sjobtitle+"','"+sdept+"','"+sphone+"','"+hid+"','"+saddr+"')");
             System.out.println("Staff information has been entered");
             int idFetched=0;
@@ -430,15 +431,18 @@ public class HotelUtility {
             	result = statement.executeUpdate("INSERT INTO Manager " +  "VALUES ('"+idFetched+"','"+hid+"')");
             }
             else {
+		    // rollback if the job title doesn't match
                 connection.rollback();
                 connection.setAutoCommit(true);
             	System.out.println("Enter valid department: FrontDeskStaff,RoomServiceStaff and CateringServiceStaff");
                 return;
             }
+		// commit if successful
             connection.commit();
             connection.setAutoCommit(true);
         }catch(SQLException e)
         {
+		// in case of any exceptions, rollback the transaction to original state	
             try{
                  connection.rollback();
                  connection.setAutoCommit(true);
@@ -752,13 +756,16 @@ public class HotelUtility {
         String ctype = "";
 	    String cno = "";
         //**************************************************************************************************************************
-        connection.setAutoCommit(false);
+        // Transaction 2 begins, auto commit set to false
+	connection.setAutoCommit(false);
+	// if payment type is card, prompt user to enter card details
         if(ptype.equals("card")){
             System.out.println("Enter card number");
             cno = scan.nextLine();
 
             ResultSet cvalid = statement.executeQuery("SELECT cardNo,type FROM Card_details where cardNo = '"+cno+"'");
-            if(!cvalid.next()){
+            // input card details, if card number is not present
+	    if(!cvalid.next()){
                 System.out.println("Enter the card type (hotel card/VISA/MASTER)");
                 ctype = scan.nextLine();
                 System.out.println("Enter the payer name");
@@ -801,6 +808,8 @@ public class HotelUtility {
         System.out.println("Enter the staff id");
         int sid = scan.nextInt();
         scan.nextLine();
+	
+	// check if entered staffID exists in the Hotel
         ResultSet staffAvailability = statement.executeQuery("select hotelID from Staff where staffID="+sid+" and hotelID="+hid);
         if(!staffAvailability.isBeforeFirst())
         {
@@ -819,7 +828,9 @@ public class HotelUtility {
             category = roomCategory.getString(2);
             System.out.println(roomavailability);
             }
+	// enter if the room is available
            if(roomavailability){
+		// assign  room service staff and catering service staff, if Room type is presidential
             if(category.equals("Presidential")){
                System.out.println("Enter the room service staff id");
                rsid = scan.nextInt();
@@ -840,6 +851,7 @@ public class HotelUtility {
             result = statement.executeUpdate("INSERT INTO Provides(qty,staffID,serviceID,bID) VALUES("+qtyService+","+rsid+","+rsService+","+idFetched+")");
             result = statement.executeUpdate("INSERT INTO Provides(qty,staffID,serviceID,bID) VALUES("+qtyService+","+csid+","+csService+","+idFetched+")");
             }
+		// Insert into Provides table fails
             if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
@@ -848,27 +860,31 @@ public class HotelUtility {
             } 
             if(category.equals("Presidential")){
             result = statement.executeUpdate("UPDATE PresidentialSuite SET RoomServiceStaffID = "+rsid+",CateringServiceStaffID = "+csid+" WHERE hotelID = "+hid+" AND roomNo = "+rno+"");
-            if(result == 0){
+        // Update on PresidentialSuite table fails    
+	if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
            System.out.println("Information not processed. PR Suite update failed!");
            return;
             } 
             result = statement.executeUpdate("UPDATE RoomServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+rsid+"");
-            if(result == 0){
+        // Update on RoomServiceStaff table fails   
+	if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
            System.out.println("Information not processed. RoomService Staff update failed");
            return;
             } 
             result = statement.executeUpdate("UPDATE CateringServiceStaff SET availability = "+notAvailable+" WHERE staffID = "+csid+"");
-           if(result == 0){
+        // Update on CateringServiceStaff table fails    
+	if(result == 0){
            connection.rollback();
            connection.setAutoCommit(true);
            System.out.println("Information not processed. Catering Staff Update failed");
            return;
            }  
            }
+	// Room assigned successfully, commit transaction
             connection.commit();
             connection.setAutoCommit(true);
             System.out.println("Customer has been checked in");
@@ -876,7 +892,7 @@ public class HotelUtility {
             System.out.println("The transaction failed due to incorrect room, hotel or staff information. Please try again.");   
         } 
         }catch(SQLException e)
-        {
+        {	// in case of any exceptions, rollback the whole transaction
                try{
                   connection.rollback();
                   connection.setAutoCommit(true);
