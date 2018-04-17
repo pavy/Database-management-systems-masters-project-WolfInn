@@ -92,6 +92,8 @@ hotelID INT NOT NULL,
 CONSTRAINT suite_pk PRIMARY KEY(roomNo, hotelID),
 CONSTRAINT psuite_service_staff_fk FOREIGN KEY(CateringServiceStaffID) REFERENCES CateringServiceStaff(staffID) ON DELETE CASCADE,
 CONSTRAINT psuite_catering_staff_fk FOREIGN KEY(RoomServiceStaffID) REFERENCES RoomServiceStaff(staffID) ON DELETE CASCADE
+CONSTRAINT hotelroom_fk FOREIGN KEY(roomNo, hotelID) REFERENCES Room(roomNo, hotelID) ON DELETE CASCADE
+  
 );
 
 CREATE TABLE Customer(
@@ -118,7 +120,7 @@ CONSTRAINT PaymentInfo_payment_fk FOREIGN KEY(ssn) REFERENCES PaymentInfo_payer(
 
 CREATE TABLE BillingInfo (
 bID INT PRIMARY KEY AUTO_INCREMENT,
-amount DECIMAL(7,2) NOT NULL,
+amount DECIMAL(10,2) NOT NULL,
 paymentID INT NOT NULL,
 startTime TIMESTAMP NOT NULL,
 endTime TIMESTAMP,
