@@ -393,10 +393,10 @@ public class HotelUtility {
         System.out.println("Enter the age of the staff member");
         int sage = scan.nextInt();
         scan.nextLine();
-        System.out.println("Enter the job title of the staff member");
+        System.out.println("Enter the job title of the staff member (Front Desk Staff/Manager/Catering Staff/Room Service Staff)");
         String sjobtitle = scan.nextLine();
         
-        System.out.println("Enter the department of the staff");
+        System.out.println("Enter the department of the staff (Management/Catering)");
         String sdept = scan.nextLine();
         System.out.println("Enter the address of the staff member");
         String saddr = scan.nextLine();
