@@ -668,8 +668,11 @@ public class HotelUtility {
 	    int rno = scan.nextInt();
 	    int availability = 1;
 	    ResultSet result1 = statement.executeQuery("SELECT (CASE WHEN availability = '"+availability+"' THEN 'Available' ELSE 'Not Available' END) AS 'Room Availability' FROM Room WHERE hotelID = '"+hid+"' AND roomNo = '"+rno+"'");
-	    while (result1.next()) {
+	    if(result1.next()) {
 	        System.out.format("%-25s%n",result1.getString(1));
+	    }
+	    else{
+		System.out.println("Please check input!");
 	    }
     }
     //Function to assign rooms to customers accroding to the request and availability
