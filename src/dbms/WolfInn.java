@@ -48,7 +48,7 @@ public class WolfInn {
 	}
 
 	private static void generateReport(Statement statement, Connection connection) {
-		// TODO Auto-generated method stub
+		// Menu for listing all the Reports
 
 		String nextChoice;
 		do{
@@ -119,7 +119,7 @@ public class WolfInn {
 	}
 
 	private static void infoProcessing( Statement statement, Connection connection) throws SQLException {
-		// handle 15 cases
+		// Menu for operations related to Information Processing
 		HotelUtility obj = new HotelUtility(connection);
 		Scanner scan = new Scanner(System.in);
 		String nextChoice;
@@ -191,37 +191,7 @@ public class WolfInn {
     		}
    		}while(nextChoice.equals("Y")||nextChoice.equals("y"));
 	}
-	/*private static void infoProcessing() {
-		// handle 15 cases
-		Scanner scan = new Scanner(System.in);
-
-		System.out.println("1 - Enter information about Hotel");
-		System.out.println("2 - Update Hotel information");
-		System.out.println("3 - Delete Hotel");
-		System.out.println("4 - Enter information about Rooms");
-		System.out.println("5 - Update Room information");
-		System.out.println("6 - Delete Room");
-		System.out.println("7 - Enter information about Staff");
-		System.out.println("8 - Update Staff information");
-		System.out.println("9 - Delete Staff");
-		System.out.println("10 - Enter information about Customer");
-		System.out.println("11 - Update Customer information");
-		System.out.println("12 - Delete Customer");
-		System.out.println("13 - Check Availability of room");
-		System.out.println("14 - Assign room to customer");
-		System.out.println("15 - Release room");
-
-		int choice = scan.nextInt();
-
-		switch (choice) {
-		case 1: // add respective function calls
-			break;
-		default:
-			System.out.println("Please select a valid task");
-			break;
-		}
-		scan.close();
-	}*/
+	
 
 	static void close(Connection connection) {
 		if (connection != null) {
@@ -250,9 +220,10 @@ public class WolfInn {
 		}
 	}
 
+	// This is the main menu for our application
 	private static void mainMenu(Statement statement, Connection connection) {
 		try {
-
+	
 			Scanner scan = new Scanner(System.in);
 			while(true){
     			System.out.println("Please select the Task or Operation you would like to perform: ");
