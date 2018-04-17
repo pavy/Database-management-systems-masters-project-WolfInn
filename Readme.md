@@ -22,9 +22,15 @@ Run the provided Jar file to get started or you can clone and run the applicatio
 
 Our code supports Java v1.6 and above. The system running our code needs to support mySql and MariaDB.
 
-## Deployment
+## Execution
 
-Add additional notes about how to deploy this on a live system
+To execute through jar, navigate to jar folder and enter command: 'java -jar dbms.jar'
+
+To execute without jar(using java files), navigate to src folder and execute the following commands:
+```
+javac -cp .:mariadb-java-client-1.1.10.jar dbms/*.java
+java -cp .:mariadb-java-client-1.1.10.jar dbms/WolfInn
+```
 
 ## Contributors
 
