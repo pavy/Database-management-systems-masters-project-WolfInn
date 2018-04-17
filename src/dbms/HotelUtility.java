@@ -277,7 +277,7 @@ public class HotelUtility {
         System.out.println("Enter the room number");
         int rno = scan.nextInt();
         scan.nextLine();
-        System.out.println("Enter the category of the room");
+        System.out.println("Enter the category of the room (Economy/Presidential/Deluxe/Executive)");
         String rcategory = scan.nextLine();
         System.out.println("Enter the occupancy");
         int roccupancy = scan.nextInt();
@@ -457,9 +457,9 @@ public class HotelUtility {
 	    try {
             ResultSet result = statement.executeQuery("SELECT * FROM Staff");
             ResultSetMetaData rsMetaData = result.getMetaData();
-            System.out.format("%n%-10s%20s%10s%20s%20s%10s%10s%25s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
+            System.out.format("%n%-10s%20s%10s%20s%20s%10s%15s%30s%n%n",rsMetaData.getColumnName(1),rsMetaData.getColumnName(2),rsMetaData.getColumnName(3),rsMetaData.getColumnName(4),rsMetaData.getColumnName(5),rsMetaData.getColumnName(6),rsMetaData.getColumnName(7),rsMetaData.getColumnName(8));
             while (result.next()) {
-                System.out.format("%-10s%20s%10s%20s%20s%10s%10s%25s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
+                System.out.format("%-10s%20s%10s%20s%20s%10s%15s%30s%n",result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8));
             }
             }catch(SQLException e)
             {
