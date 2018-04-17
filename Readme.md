@@ -24,7 +24,7 @@ Our code supports Java v1.6 and above. The system running our code needs to supp
 
 ## Execution
 
-To execute through jar, navigate to jar folder and enter command: 'java -jar dbms.jar'
+To execute through jar, navigate to jars folder and enter command: 'java -jar dbms.jar'
 
 To execute without jar(using java files), navigate to src folder and execute the following commands:
 ```
